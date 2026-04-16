@@ -1,0 +1,75 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Мой Дом ДВ — Строительство и дизайн интерьеров {% endblock %}
+
+{% block content %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <section class="hero">
+        <div class="hero-panel">
+            <div class="hero-container">
+                <h1 class="hero-title">
+                    Ваш дом — <span class="orange">наша забота</span>
+                </h1>
+                <p class="hero-subtitle">
+                    «Мой Дом ДВ» — команда профессионалов, которая превращает ваши идеи в реальность.
+                    Строительство, ремонт и дизайн интерьеров с душой и ответственностью.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn-primary">Оставить заявку</a>
+                    <a href="#" class="btn-outline">О компании</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-slider">
+        <div class="slider-container">
+            <div class="slider-left">
+                <div class="slider-images">
+                    <img src="https://placehold.co/600x400/1E293B/ff6600?text=Проект+1" class="slider-image active" alt="Проект 1">
+                    <img src="https://placehold.co/600x400/334155/ff6600?text=Проект+2" class="slider-image" alt="Проект 2">
+                    <img src="https://placehold.co/600x400/475569/ff6600?text=Проект+3" class="slider-image" alt="Проект 3">
+                    <img src="https://placehold.co/600x400/1E293B/ff8844?text=Проект+4" class="slider-image" alt="Проект 4">
+                    <img src="https://placehold.co/600x400/334155/ff8844?text=Проект+5" class="slider-image" alt="Проект 5">
+                </div>
+                
+                <button class="slider-prev">←</button>
+                <button class="slider-next">→</button>
+                
+                <div class="slider-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+            
+            <div class="slider-right">
+                <div class="quote-card">
+                    <h3>Рассчитайте стоимость</h3>
+                    <p>Оставьте заявку, и мы подготовим индивидуальную смету на ремонт или строительство вашего объекта</p>
+                    <a href="#" class="btn-calc">Рассчитать стоимость →</a>
+                    <div class="calc-features">
+                        <span>✓ Бесплатно</span>
+                        <span>✓ За 24 часа</span>
+                        <span>✓ Без обязательств</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
+        }
+    </script>
+    
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
