@@ -3,10 +3,10 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flask_login import current_user
-from .models.employee import Employee
-from .models.role import Role  # Добавить импорт Role
 
+from .models.employee import Employee
+from .models.role import Role  
+    
 class RegistrationForm(FlaskForm):
     last_name = StringField('Фамилия', validators=[DataRequired(), Length(min=2, max=50)])
     first_name = StringField('Имя', validators=[DataRequired(), Length(min=2, max=50)])

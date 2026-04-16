@@ -17,7 +17,6 @@ def register():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         avatar_filename = save_picture(form.avatar.data)
         
-        # Создаем сотрудника с выбранной ролью (убираем поиск роли по умолчанию)
         employee = Employee(
             last_name=form.last_name.data,
             first_name=form.first_name.data,
@@ -27,7 +26,7 @@ def register():
             phone=form.phone.data,
             email=form.email.data,
             avatar=avatar_filename,
-            role_id=form.role.data  # Используем выбранную роль из формы
+            role_id=form.role.data  
         )
         
         try:
@@ -43,23 +42,26 @@ def register():
 @employee.route('/employee/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
+    
     if form.validate_on_submit():
         employee = Employee.query.filter_by(login=form.login.data).first()
+        
         if employee and bcrypt.check_password_hash(employee.password, form.password.data):
-            # Обновляем время последнего захода
             employee.last_seen = datetime.utcnow()
             db.session.commit()
-            
             login_user(employee, remember=form.remember.data)
             next_page = request.args.get('next')
             flash(f"Поздравляем, {employee.first_name} {employee.last_name}! Вы успешно авторизованы", "success")
-            return redirect(next_page) if next_page else redirect(url_for('main.index'))  # исправил post.all на main.index
+            return redirect(next_page) if next_page else redirect(url_for('main.index'))
         else:
-            flash(f"Ошибка входа. Пожалуйста проверьте логин и пароль!", "danger")
-
+            flash("Ошибка входа. Пожалуйста проверьте логин и пароль!", "danger")
+    else:
+        if request.method == 'POST':
+            flash("Ошибка валидации формы. Проверьте введенные данные!", "danger")
+    
     return render_template('employee/login.html', form=form)
 
 @employee.route('/employee/logout', methods=['POST', 'GET'])
 def logout():
     logout_user()
-    return redirect(url_for('main.index'))  # исправил index.html на main.index
+    return redirect(url_for('main.index')) 
