@@ -1,0 +1,96 @@
+{% extends "main/base.html" %}
+
+{% block title %}Создание проекта{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">➕ Создание нового проекта</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('project.create') }}">
+                        <!-- Основная информация -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Название проекта <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="form-text">Пример: ЖК "Солнечный", Торговый центр "Малина"</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Адрес <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                            <div class="form-text">Полный адрес объекта строительства</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Описание</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            <div class="form-text">Краткое описание проекта, тип работ и т.д.</div>
+                        </div>
+
+                        <!-- Даты -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="start_date" class="form-label">Дата начала <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="end_date" class="form-label">Планируемая дата окончания</label>
+                                <input type="date" class="form-control" id="end_date" name="end_date">
+                                <div class="form-text">Оставьте пустым, если неизвестно</div>
+                            </div>
+                        </div>
+
+                        <!-- Финансы и приоритет -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="budget" class="form-label">Бюджет (₽)</label>
+                                <input type="number" class="form-control" id="budget" name="budget" step="0.01" value="0">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="priority" class="form-label">Приоритет</label>
+                                <select class="form-select" id="priority" name="priority">
+                                    <option value="low">🟢 Низкий</option>
+                                    <option value="medium" selected>🟡 Средний</option>
+                                    <option value="high">🟠 Высокий</option>
+                                    <option value="critical">🔴 Критический</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Назначение менеджера -->
+                        <div class="mb-3">
+                            <label for="manager_id" class="form-label">Назначить менеджера проекта</label>
+                            <select class="form-select" id="manager_id" name="manager_id">
+                                <option value="">-- Выберите менеджера --</option>
+                                {% for manager in managers %}
+                                    <option value="{{ manager.id }}">
+                                        {{ manager.last_name }} {{ manager.first_name }} 
+                                        {% if manager.patronymic %}{{ manager.patronymic }}{% endif %}
+                                        ({{ manager.login }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text">Менеджер сможет управлять задачами и назначать сотрудников</div>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('project.list_projects') }}" class="btn btn-secondary">
+                                ← Отмена
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                ✅ Создать проект
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
