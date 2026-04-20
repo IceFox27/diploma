@@ -9,7 +9,7 @@ def save_picture(picture):
     _, f_ext = os.path.splitext(picture.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(current_app.config['SERVER_PATH'], picture_fn)
-    output_size = (125, 125)
+    output_size = (64, 64)
     i = Image.open(picture)
     i.thumbnail(output_size)
     i.save(picture_path)

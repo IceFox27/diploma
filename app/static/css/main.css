@@ -302,3 +302,70 @@ body {
     position: relative;
     z-index: 1;
 }
+
+/* Стили для аватарки в хедере */
+.header-profile {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.header-profile:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.profile-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff9800;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.profile-avatar:hover {
+    border-color: #f57c00;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+    transform: scale(1.05);
+}
+
+/* Стили для иконки-заглушки (если нет аватарки) */
+.profile-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    border: 2px solid #ff9800;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.profile-icon:hover {
+    background: linear-gradient(135deg, #f57c00, #e65100);
+    border-color: #f57c00;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+    transform: scale(1.05);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .profile-avatar,
+    .profile-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+}

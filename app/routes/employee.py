@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, render_template, redirect, flash, url_for, request
-from flask_login import login_user, logout_user
-
+from flask_login import login_user, logout_user, login_required, current_user  # Добавлен login_required и current_user
+    
 from ..functions import save_picture
 from ..forms import RegistrationForm, LoginForm
 from ..extensions import db, bcrypt
@@ -64,4 +64,9 @@ def login():
 @employee.route('/employee/logout', methods=['POST', 'GET'])
 def logout():
     logout_user()
-    return redirect(url_for('main.index')) 
+    return redirect(url_for('main.index'))
+
+@employee.route('/employee/profile')
+@login_required
+def profile():
+    return render_template('employee/profile.html', employee=current_user)

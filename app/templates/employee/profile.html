@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Профиль сотрудника{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Мой профиль</h3>
+                </div>
+                <div class="card-body text-center">
+                    {% if employee.avatar %}
+                        <img src="{{ url_for('static', filename='avatars/' + employee.avatar) }}" 
+                             class="rounded-circle mb-3" 
+                             style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #ff9800;">
+                    {% else %}
+                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mx-auto mb-3"
+                             style="width: 150px; height: 150px; font-size: 64px; color: white;">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <h4>{{ employee.first_name }} {{ employee.last_name }}</h4>
+                    <p class="text-muted">{{ employee.role.name if employee.role else 'Нет роли' }}</p>
+                    
+                    <div class="row mt-4 text-start">
+                        <div class="col-md-6">
+                            <p><strong>Логин:</strong> {{ employee.login }}</p>
+                            <p><strong>Email:</strong> {{ employee.email }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Телефон:</strong> {{ employee.phone }}</p>
+                            <p><strong>Отчество:</strong> {{ employee.patronymic or 'Не указано' }}</p>
+                        </div>
+                    </div>
+                    
+                    <a href="{{ url_for('employee.logout') }}" class="btn btn-danger mt-3">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
