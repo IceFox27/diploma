@@ -3,3 +3,4 @@ app/static/images/
 env
 .env
 .flaskenv
+__pycache__/

@@ -293,7 +293,6 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-// Эффекты для скролла хедера
 window.addEventListener('scroll', function() {
     const header = document.getElementById('mainHeader');
     if (header) {
