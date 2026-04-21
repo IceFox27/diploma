@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from ..extensions import db
 from ..models.project import Project
 from ..models.employee import Employee
-from ..models.role import Role  # ДОБАВЛЕН ИМПОРТ (был пропущен)
+from ..models.role import Role  
 
 project_bp = Blueprint('project', __name__, url_prefix='/projects')
 
@@ -11,7 +11,6 @@ project_bp = Blueprint('project', __name__, url_prefix='/projects')
 @project_bp.route('/')
 @login_required
 def list_projects():
-    """Список всех проектов (директор видит все, менеджер/сотрудник - свои)"""
     if current_user.role.name == 'director':
         projects = Project.query.all()
     elif current_user.role.name == 'manager':
@@ -20,8 +19,6 @@ def list_projects():
             (Project.director_id == current_user.id)
         ).all()
     else:
-        # Обычный сотрудник - проекты, где он в рабочей группе
-        # assigned_projects теперь динамический (lazy='dynamic'), можно использовать .all()
         projects = current_user.assigned_projects.all()
     
     return render_template('projects/list.html', projects=projects)
@@ -30,20 +27,15 @@ def list_projects():
 @project_bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
-    """Создание проекта (только для директора)"""
-    # Проверка прав: только директор может создавать проекты
     if current_user.role.name != 'director':
         flash('Только директор может создавать проекты', 'danger')
         return redirect(url_for('project.list_projects'))
     
-    # GET-запрос: показываем форму
     if request.method == 'GET':
         managers = Employee.query.join(Role).filter(Role.name == 'manager').all()
         return render_template('projects/create.html', managers=managers)
     
-    # POST-запрос: обрабатываем форму
     try:
-        # Получаем данные из формы
         name = request.form.get('name')
         address = request.form.get('address')
         description = request.form.get('description')
@@ -53,13 +45,11 @@ def create():
         priority = request.form.get('priority', 'medium')
         manager_id = request.form.get('manager_id') or None
         
-        # Валидация обязательных полей
         if not name or not address or not start_date:
             flash('Заполните обязательные поля (название, адрес, дата начала)', 'danger')
             managers = Employee.query.join(Role).filter(Role.name == 'manager').all()
             return render_template('projects/create.html', managers=managers)
         
-        # Создаём проект
         project = Project(
             name=name,
             address=address,
@@ -94,7 +84,6 @@ def edit(project_id):
     """Редактирование проекта (только директор или менеджер проекта)"""
     project = Project.query.get_or_404(project_id)
     
-    # Проверка прав
     if current_user.role.name != 'director' and project.manager_id != current_user.id:
         flash('У вас нет прав для редактирования этого проекта', 'danger')
         return redirect(url_for('project.list_projects'))
@@ -104,7 +93,6 @@ def edit(project_id):
         managers = Employee.query.join(Role).filter(Role.name == 'manager').all()
         return render_template('projects/edit.html', project=project, managers=managers)
     
-    # POST-запрос: обрабатываем форму
     try:
         # Обновляем данные
         project.name = request.form.get('name')
