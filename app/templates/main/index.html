@@ -1,8 +1,409 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Мой Дом ДВ — Строительство и дизайн интерьеров{% endblock %}
+{% block title %}Мой Дом ДВ — Строительство и дизайн интерьеров в Хабаровске{% endblock %}
 
 {% block content %}
+<style>
+    /* Общие стили для всех секций */
+    section {
+        position: relative;
+        overflow: hidden;
+        background: transparent !important;
+    }
+    
+    /* Секция услуг */
+    .services {
+        padding: 80px 20px;
+        position: relative;
+        z-index: 10;
+        background: transparent !important;
+    }
+    
+    /* Секция о компании */
+    .about {
+        padding: 80px 20px;
+        position: relative;
+        z-index: 10;
+        background: transparent !important;
+    }
+    
+    /* Секция преимуществ */
+    .advantages {
+        padding: 80px 20px;
+        position: relative;
+        z-index: 10;
+        background: transparent !important;
+    }
+    
+    /* Секция отзывов */
+    .reviews {
+        padding: 80px 20px;
+        position: relative;
+        z-index: 10;
+        background: transparent !important;
+    }
+    
+    /* Секция контактов */
+    .contacts {
+        padding: 80px 20px;
+        position: relative;
+        z-index: 10;
+        background: transparent !important;
+    }
+    
+    .container-services, .container-about, .container-advantages, .container-reviews, .container-contacts {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 12px;
+        background: linear-gradient(135deg, #ffffff, #ff9944);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .section-title p {
+        font-size: 18px;
+        color: #94a3b8;
+    }
+    
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+    
+    .service-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 102, 0, 0.15);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 102, 0, 0.4);
+        background: rgba(30, 41, 59, 0.7);
+        box-shadow: 0 10px 30px rgba(255, 102, 0, 0.1);
+    }
+    
+    .service-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+    
+    .service-card h3 {
+        font-size: 22px;
+        color: white;
+        margin-bottom: 15px;
+    }
+    
+    .service-card p {
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+    
+    .service-link {
+        color: #ff6600;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+    
+    .service-link:hover {
+        color: #ff9944;
+    }
+    
+    /* О компании */
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+    }
+    
+    .about-content h2 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #ffffff, #ff9944);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .about-content p {
+        color: #94a3b8;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+    
+    .about-stats {
+        display: flex;
+        gap: 30px;
+        margin: 30px 0;
+    }
+    
+    .stat {
+        text-align: center;
+    }
+    
+    .stat-number {
+        display: block;
+        font-size: 32px;
+        font-weight: 700;
+        color: #ff6600;
+    }
+    
+    .stat-label {
+        font-size: 14px;
+        color: #94a3b8;
+    }
+    
+    .about-image img {
+        width: 100%;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 102, 0, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Преимущества */
+    .advantages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 30px;
+    }
+    
+    .advantage-item {
+        text-align: center;
+        padding: 30px;
+        background: rgba(30, 41, 59, 0.4);
+        backdrop-filter: blur(4px);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 102, 0, 0.1);
+    }
+    
+    .advantage-item:hover {
+        background: rgba(30, 41, 59, 0.6);
+        transform: translateY(-3px);
+        border-color: rgba(255, 102, 0, 0.3);
+    }
+    
+    .advantage-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+    
+    .advantage-item h4 {
+        font-size: 20px;
+        color: white;
+        margin-bottom: 12px;
+    }
+    
+    .advantage-item p {
+        color: #94a3b8;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    
+    /* Отзывы */
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+    }
+    
+    .review-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 102, 0, 0.15);
+        border-radius: 20px;
+        padding: 25px;
+        transition: all 0.3s ease;
+    }
+    
+    .review-card:hover {
+        border-color: rgba(255, 102, 0, 0.4);
+        transform: translateY(-3px);
+    }
+    
+    .review-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .review-avatar {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #ff6600, #e05a00);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .review-info h4 {
+        color: white;
+        margin: 0 0 5px;
+    }
+    
+    .review-info span {
+        font-size: 12px;
+        color: #64748b;
+    }
+    
+    .review-text {
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    
+    .review-rating {
+        color: #ff6600;
+        font-size: 18px;
+    }
+    
+    /* Контакты */
+    .contacts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(8px);
+        border-radius: 24px;
+        padding: 40px;
+        border: 1px solid rgba(255, 102, 0, 0.15);
+    }
+    
+    .contacts-info h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #ffffff, #f28124);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .contacts-info p {
+        color: #94a3b8;
+        margin-bottom: 25px;
+    }
+    
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 102, 0, 0.1);
+    }
+    
+    .contact-icon {
+        font-size: 20px;
+    }
+    
+    .contact-item a, .contact-item span {
+        color: #cbd5e1;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .contact-item a:hover {
+        color: #ff6600;
+    }
+    
+    .callback-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .callback-form input, .callback-form textarea {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 102, 0, 0.2);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: white;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    
+    .callback-form input:focus, .callback-form textarea:focus {
+        outline: none;
+        border-color: #ff6600;
+        background: rgba(15, 23, 42, 0.8);
+        box-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
+    }
+    
+    .callback-form input::placeholder, .callback-form textarea::placeholder {
+        color: #64748b;
+    }
+    
+    .callback-form button {
+        background: linear-gradient(135deg, #ff6600, #e05a00);
+        border: none;
+        padding: 14px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .callback-form button:hover {
+        background: linear-gradient(135deg, #e05a00, #cc4e00);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255, 102, 0, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+        .about-grid, .contacts-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .section-title h2 {
+            font-size: 28px;
+        }
+        
+        .services, .about, .advantages, .reviews, .contacts {
+            padding: 50px 20px;
+        }
+        
+        .about-stats {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .contacts-grid {
+            padding: 25px;
+        }
+    }
+</style>
+
 <section class="hero">
     <div class="hero-panel">
         <div class="hero-container">
@@ -10,31 +411,98 @@
                 Ваш дом — <span class="orange">наша забота</span>
             </h1>
             <p class="hero-subtitle">
-                «Мой Дом ДВ» — команда профессионалов, которая превращает ваши идеи в реальность.
-                Строительство, ремонт и дизайн интерьеров с душой и ответственностью.
+                «Мой Дом ДВ» — команда профессионалов с 10-летним опытом. 
+                Строительство домов под ключ, ремонт квартир и дизайн интерьеров 
+                в Хабаровске и Хабаровском крае.
             </p>
             <div class="hero-buttons">
-                <a href="#" class="btn-primary">Оставить заявку</a>
-                <a href="#" class="btn-outline">О компании</a>
+                <a href="#callback" class="btn-primary">Бесплатная консультация</a>
+                <a href="#about" class="btn-outline">О компании</a>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Услуги -->
+<section class="services">
+    <div class="container-services">
+        <div class="section-title">
+            <h2>Наши услуги</h2>
+            <p>Полный цикл работ по созданию вашего идеального пространства</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🏗️</div>
+                <h3>Строительство домов</h3>
+                <p>Строительство коттеджей, таунхаусов и загородных домов под ключ. Работаем с кирпичом, газоблоком, деревом.</p>
+                <a href="#" class="service-link">Подробнее →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛠️</div>
+                <h3>Ремонт квартир</h3>
+                <p>Косметический, капитальный и евроремонт квартир любой сложности. Гарантия качества до 5 лет.</p>
+                <a href="#" class="service-link">Подробнее →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Дизайн интерьеров</h3>
+                <p>Разработка уникальных дизайн-проектов с 3D-визуализацией. Учтём все ваши пожелания и бюджет.</p>
+                <a href="#" class="service-link">Подробнее →</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📐</div>
+                <h3>Архитектурное проектирование</h3>
+                <p>Создание архитектурных планов, фасадов и конструктивных решений для вашего дома.</p>
+                <a href="#" class="service-link">Подробнее →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- О компании -->
+<section class="about" id="about">
+    <div class="container-about">
+        <div class="about-grid">
+            <div class="about-content">
+                <h2>О компании «Мой Дом ДВ»</h2>
+                <p>Мы работаем на рынке Хабаровска с 2014 года. За это время реализовали более 120 проектов — от небольших квартир до загородных домов площадью 300+ м².</p>
+                <p>Наша команда — это архитекторы, дизайнеры, инженеры и строители с профильным образованием и опытом от 8 лет.</p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-number">120+</span>
+                        <span class="stat-label">Реализованных проектов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Довольных клиентов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10 лет</span>
+                        <span class="stat-label">На рынке</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-primary">Узнать больше</a>
+            </div>
+            <div class="about-image">
+                <img src="https://placehold.co/500x400/1E293B/ff6600?text=Наша+команда" alt="О компании">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Проекты (слайдер) -->
 <section class="projects-slider">
     <div class="slider-container">
         <div class="slider-left">
             <div class="slider-images">
-                <img src="https://placehold.co/600x400/1E293B/ff6600?text=Проект+1" class="slider-image active" alt="Проект 1">
-                <img src="https://placehold.co/600x400/334155/ff6600?text=Проект+2" class="slider-image" alt="Проект 2">
-                <img src="https://placehold.co/600x400/475569/ff6600?text=Проект+3" class="slider-image" alt="Проект 3">
-                <img src="https://placehold.co/600x400/1E293B/ff8844?text=Проект+4" class="slider-image" alt="Проект 4">
-                <img src="https://placehold.co/600x400/334155/ff8844?text=Проект+5" class="slider-image" alt="Проект 5">
+                <img src="https://placehold.co/600x400/1E293B/ff6600?text=ЖК+Авангард" class="slider-image active" alt="ЖК Авангард">
+                <img src="https://placehold.co/600x400/334155/ff6600?text=Коттедж+Березки" class="slider-image" alt="Коттедж Березки">
+                <img src="https://placehold.co/600x400/475569/ff6600?text=Лофт+Центральный" class="slider-image" alt="Лофт Центральный">
+                <img src="https://placehold.co/600x400/1E293B/ff8844?text=Дом+Парковый" class="slider-image" alt="Дом Парковый">
+                <img src="https://placehold.co/600x400/334155/ff8844?text=Апартаменты+Восток" class="slider-image" alt="Апартаменты Восток">
             </div>
-            
             <button class="slider-prev">←</button>
             <button class="slider-next">→</button>
-            
             <div class="slider-dots">
                 <span class="dot active"></span>
                 <span class="dot"></span>
@@ -43,7 +511,6 @@
                 <span class="dot"></span>
             </div>
         </div>
-        
         <div class="slider-right">
             <div class="quote-card">
                 <h3>Рассчитайте стоимость</h3>
@@ -54,6 +521,122 @@
                     <span>✓ За 24 часа</span>
                     <span>✓ Без обязательств</span>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="advantages">
+    <div class="container-advantages">
+        <div class="section-title">
+            <h2>Почему выбирают нас</h2>
+            <p>Мы ценим каждого клиента и дорожим своей репутацией</p>
+        </div>
+        <div class="advantages-grid">
+            <div class="advantage-item">
+                <div class="advantage-icon">📋</div>
+                <h4>Прозрачная смета</h4>
+                <p>Фиксированная стоимость работ без скрытых платежей и неожиданных доработок</p>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-icon">⏱️</div>
+                <h4>Соблюдение сроков</h4>
+                <p>Чёткое планирование и контроль на каждом этапе строительства</p>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-icon">🔧</div>
+                <h4>Гарантия 5 лет</h4>
+                <p>Предоставляем расширенную гарантию на все виды работ</p>
+            </div>
+            <div class="advantage-item">
+                <div class="advantage-icon">📸</div>
+                <h4>Отчёт каждый день</h4>
+                <p>Ежедневные фото- и видеоотчёты в Telegram о ходе работ</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Отзывы -->
+<section class="reviews">
+    <div class="container-reviews">
+        <div class="section-title">
+            <h2>Отзывы клиентов</h2>
+            <p>Наши клиенты — наша лучшая реклама</p>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">А</div>
+                    <div class="review-info">
+                        <h4>Анна Соколова</h4>
+                        <span>Квартира 75 м², ЖК «Амур»</span>
+                    </div>
+                </div>
+                <p class="review-text">Спасибо команде «Мой Дом ДВ» за ремонт моей квартиры! Сделали всё быстро и качественно. Особенно порадовал дизайн-проект — получилось даже лучше, чем я представляла.</p>
+                <div class="review-rating">★★★★★</div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">Д</div>
+                    <div class="review-info">
+                        <h4>Дмитрий Петров</h4>
+                        <span>Коттедж 180 м²</span>
+                    </div>
+                </div>
+                <p class="review-text">Строили дом под ключ. Всё сделали в срок, смета не изменилась. Отдельное спасибо прорабу Сергею — всегда был на связи и помогал с любыми вопросами.</p>
+                <div class="review-rating">★★★★★</div>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">Е</div>
+                    <div class="review-info">
+                        <h4>Елена Морозова</h4>
+                        <span>Таунхаус 120 м²</span>
+                    </div>
+                </div>
+                <p class="review-text">Отличная компания! Рекомендую всем. Делали дизайн-проект и ремонт. Получилось стильно и современно. Приятно было работать с профессионалами.</p>
+                <div class="review-rating">★★★★★</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Контакты -->
+<section class="contacts" id="callback">
+    <div class="container-contacts">
+        <div class="contacts-grid">
+            <div class="contacts-info">
+                <h2>Свяжитесь с нами</h2>
+                <p>Оставьте заявку, и мы перезвоним вам в течение 15 минут</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <a href="tel:+79845555888">+7 (984) 555-58-88</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <a href="mailto:info@moydomdv.ru">info@moydomdv.ru</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <span>г. Хабаровск, ул. Ленина, 50, офис 301</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">⏰</span>
+                        <span>Пн-Пт: 9:00 - 19:00, Сб: 10:00 - 15:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="contacts-form">
+                <form method="post" class="callback-form">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="tel" name="phone" placeholder="Номер телефона" required>
+                    <input type="email" name="email" placeholder="Email">
+                    <textarea name="message" rows="4" placeholder="Сообщение"></textarea>
+                    <button type="submit" class="btn-primary">Отправить заявку</button>
+                </form>
             </div>
         </div>
     </div>

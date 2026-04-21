@@ -13,6 +13,30 @@
 @import url('animations.css');
 @import url('responsive.css');
 
+/* ===== ЖЁСТКИЙ ФИКС БЕЛОГО ФОНА ===== */
+html, body {
+    background-color: #0F172A !important;
+    background: #0F172A !important;
+}
+
+body * {
+    background-color: transparent !important;
+}
+
+/* Возвращаем фон нужным элементам */
+.service-card, .advantage-item, .review-card, .contacts-grid, .quote-card, .hero-panel,
+.header, .work-header, .footer-4 {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+}
+
+.header, .work-header, .footer-4 {
+    background-color: rgba(15, 23, 42, 0.85) !important;
+}
+
+.service-card:hover, .advantage-item:hover, .review-card:hover, .quote-card:hover {
+    background-color: rgba(30, 41, 59, 0.7) !important;
+}
+
 /* Дополнительно для канваса Three.js */
 canvas {
     display: block;
