@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Мои проекты — Мой Дом ДВ{% endblock %}
+
+{% block header %}
+    {% include 'main/_work_header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="work-container">
+    <div class="section-header">
+        <h1>Мои проекты</h1>
+        {% if current_user.role.name == 'director' %}
+            <a href="{{ url_for('project.create') }}" class="btn-primary">+ Создать проект</a>
+        {% endif %}
+    </div>
+
+    <div class="projects-grid">
+        {% if projects %}
+            {% for project in projects %}
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>{{ project.name }}</h3>
+                    <span class="priority-badge priority-{{ project.priority }}">{{ project.priority }}</span>
+                </div>
+                <p class="project-address">{{ project.address }}</p>
+                <div class="project-progress">
+                    <div class="progress-bar" style="width: {{ project.progress_percent }}%"></div>
+                    <span class="progress-text">{{ project.progress_percent }}%</span>
+                </div>
+                <div class="project-footer">
+                    <span class="project-status status-{{ project.status }}">{{ project.status }}</span>
+                    <a href="{{ url_for('project.view', project_id=project.id) }}" class="btn-link">Подробнее →</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>У вас пока нет проектов</p>
+                {% if current_user.role.name == 'director' %}
+                    <a href="{{ url_for('project.create') }}" class="btn-primary">Создать проект</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

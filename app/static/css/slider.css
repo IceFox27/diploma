@@ -1,0 +1,136 @@
+.projects-slider {
+    padding: 80px 20px;
+    background: transparent;
+    position: relative;
+    z-index: 10;
+}
+
+.slider-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.slider-left {
+    flex: 1.5;
+    position: relative;
+    min-width: 280px;
+}
+
+.slider-images {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.slider-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.slider-image.active {
+    opacity: 1;
+}
+
+.slider-prev, .slider-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 102, 0, 0.8);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.slider-prev { left: 16px; }
+.slider-next { right: 16px; }
+
+.slider-prev:hover, .slider-next:hover {
+    background: #ff6600;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #ff6600;
+    width: 24px;
+    border-radius: 5px;
+}
+
+/* Карточка */
+.quote-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 102, 0, 0.3);
+    border-radius: 28px;
+    padding: 40px 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.quote-card:hover {
+    border-color: #ff6600;
+    transform: translateY(-5px);
+    background: rgba(30, 41, 59, 0.8);
+}
+
+.quote-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.quote-card p {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.calc-features {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.calc-features span {
+    font-size: 14px;
+    color: #cbd5e1;
+}

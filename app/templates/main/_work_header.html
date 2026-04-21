@@ -1,0 +1,35 @@
+{% if current_user.is_authenticated %}
+<header class="work-header">
+    <div class="container-header">
+        <a href="{{ url_for('work.index') }}" class="work-header-logo">
+            МОЙ ДОМ <span class="orange">ДВ</span>
+        </a>
+        
+        <nav class="work-header-nav">
+            <a href="{{ url_for('project.list_projects') }}" class="nav-link">
+                <i class="icon">📋</i> Проекты
+            </a>
+            <a href="{{ url_for('work.projects') }}" class="nav-link">
+                <i class="icon">✅</i> Мои проекты
+            </a>
+        </nav>
+        
+        <div class="work-header-user">
+            <div class="user-info">
+                <span class="user-name">{{ current_user.first_name }} {{ current_user.last_name }}</span>
+                <span class="user-role">{{ current_user.role.display_name if current_user.role else 'Сотрудник' }}</span>
+            </div>
+            <div class="user-avatar">
+                {% if current_user.avatar %}
+                    <img src="{{ url_for('static', filename='uploads/' + current_user.avatar) }}" alt="Аватар" class="avatar-img">
+                {% else %}
+                    <div class="avatar-placeholder">
+                        {{ current_user.first_name[0] if current_user.first_name else 'U' }}{{ current_user.last_name[0] if current_user.last_name else '' }}
+                    </div>
+                {% endif %}
+            </div>
+            <a href="{{ url_for('employee.logout') }}" class="logout-btn">Выйти</a>
+        </div>
+    </div>
+</header>
+{% endif %}

@@ -1,0 +1,174 @@
+/* ===== WORK HEADER (шапка для авторизованных) ===== */
+.work-header {
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 3px solid #ff6600;
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}
+
+.work-header .container-header {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Логотип */
+.work-header-logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.work-header-logo .orange {
+    color: #ff6600;
+}
+
+.work-header-logo:hover {
+    transform: translateY(-2px);
+}
+
+.work-header-logo:hover .orange {
+    text-shadow: 0 0 8px rgba(255, 102, 0, 0.5);
+}
+
+/* Навигация */
+.work-header-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.work-header-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 40px;
+    transition: all 0.3s ease;
+}
+
+.work-header-nav .nav-link:hover {
+    background: rgba(255, 102, 0, 0.1);
+    color: #ff6600;
+}
+
+.work-header-nav .nav-link .icon {
+    font-size: 18px;
+}
+
+/* Блок пользователя */
+.work-header-user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-info {
+    text-align: right;
+}
+
+.user-name {
+    display: block;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.user-role {
+    display: block;
+    color: #ff6600;
+    font-size: 11px;
+}
+
+/* Аватар */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff6600;
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6600, #e05a00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+/* Кнопка выхода */
+.logout-btn {
+    padding: 8px 16px;
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    text-decoration: none;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .work-header .container-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .work-header-nav {
+        justify-content: center;
+    }
+    
+    .work-header-user {
+        justify-content: flex-end;
+    }
+    
+    .user-info {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .work-header-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .work-header-nav .nav-link {
+        justify-content: center;
+    }
+}   

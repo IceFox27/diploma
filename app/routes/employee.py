@@ -33,10 +33,11 @@ def register():
             db.session.add(employee)
             db.session.commit()
             flash(f"{form.login.data} успешно зарегистрирован", "success")
-            return redirect(url_for('employee.login')) 
+            # НЕТ РЕДИРЕКТА - остаёмся на той же странице
         except Exception as e:
             print(str(e))
             flash(f"При регистрации сотрудника произошла ошибка", "danger")
+    
     return render_template('employee/register.html', form=form)
 
 @employee.route('/employee/login', methods=['POST', 'GET'])

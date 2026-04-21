@@ -6,6 +6,7 @@ from .config import Config
 from .routes.main import main 
 from .routes.employee import employee 
 from .routes.project import project_bp
+from .routes.work import work_bp  # ← ДОБАВЛЕН ИМПОРТ
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -14,6 +15,7 @@ def create_app(config_class=Config):
     app.register_blueprint(main)
     app.register_blueprint(employee) 
     app.register_blueprint(project_bp)
+    app.register_blueprint(work_bp)  # ← ДОБАВЛЕНА РЕГИСТРАЦИЯ
 
     db.init_app(app)
     migrate.init_app(app, db)

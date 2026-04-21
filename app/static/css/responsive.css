@@ -1,0 +1,41 @@
+/* Адаптивность */
+@media (max-width: 768px) {
+    .profile-avatar, .profile-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .hero-panel {
+        padding: 30px 20px;
+        margin: 0 16px;
+    }
+    
+    .hero-title {
+        font-size: 32px;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .projects-slider {
+        padding: 50px 20px;
+    }
+    
+    .slider-container {
+        flex-direction: column;
+    }
+    
+    .slider-left {
+        width: 100%;
+    }
+    
+    .quote-card {
+        padding: 30px 24px;
+    }
+    
+    .quote-card h3 {
+        font-size: 24px;
+    }
+}
