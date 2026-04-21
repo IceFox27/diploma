@@ -24,7 +24,7 @@
                             
                             <div class="mb-3">
                                 {{ form.login.label(class="form-label fw-semibold") }}
-                                {{ form.login(class="form-control form-control-lg rounded-3", placeholder="Введите логин") }}
+                                {{ form.login(class="form-control form-control-lg", placeholder="Введите логин") }}
                                 {% if form.login.errors %}
                                     <div class="text-danger">
                                         {% for error in form.login.errors %}
@@ -36,7 +36,7 @@
                             
                             <div class="mb-3">
                                 {{ form.password.label(class="form-label fw-semibold") }}
-                                {{ form.password(class="form-control form-control-lg rounded-3", placeholder="Введите пароль") }}
+                                {{ form.password(class="form-control form-control-lg", placeholder="Введите пароль") }}
                                 {% if form.password.errors %}
                                     <div class="text-danger">
                                         {% for error in form.password.errors %}
@@ -52,13 +52,7 @@
                             </div>
                             
                             <div class="d-grid gap-2">
-                                {{ form.submit(class="btn btn-primary btn-lg rounded-3 fw-semibold") }}
-                            </div>
-                            
-                            <div class="text-center mt-4">
-                                <p class="mb-0">
-                                    Нет аккаунта? <a href="{{ url_for('employee.register') }}" class="text-decoration-none">Зарегистрироваться</a>
-                                </p>
+                                {{ form.submit(class="btn-primary", value="Войти") }}
                             </div>
                         </form>
                     </div>

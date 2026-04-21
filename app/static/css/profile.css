@@ -1,14 +1,9 @@
-html, body {
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
 .profile-page {
     min-height: 100vh;
     background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
     position: relative;
     overflow: hidden;
-    padding: 60px 0;
+    padding: 140px 0 80px;
 }
 
 .profile-page::before {
@@ -231,7 +226,7 @@ html, body {
 
 @media (max-width: 768px) {
     .profile-page {
-        padding: 30px 0;
+        padding: 120px 0 60px;
     }
     
     .profile-header {

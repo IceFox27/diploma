@@ -1,7 +1,8 @@
 from datetime import datetime
-from flask import Blueprint, render_template, redirect, flash, url_for, request
-from flask_login import login_user, logout_user, login_required, current_user  # Добавлен login_required и current_user
-    
+from flask import Blueprint, render_template, redirect, url_for, request
+from flask_login import login_user, logout_user, login_required, current_user
+from functools import wraps
+
 from ..functions import save_picture
 from ..forms import RegistrationForm, LoginForm
 from ..extensions import db, bcrypt
@@ -10,7 +11,19 @@ from ..models.role import Role
 
 employee = Blueprint('employee', __name__)
 
+def director_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return redirect(url_for('employee.login'))
+        if current_user.role.name != 'director':
+            return redirect(url_for('main.index'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 @employee.route('/employee/register', methods=['POST', 'GET'])
+@login_required
+@director_required
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -32,11 +45,9 @@ def register():
         try:
             db.session.add(employee)
             db.session.commit()
-            flash(f"{form.login.data} успешно зарегистрирован", "success")
-            # НЕТ РЕДИРЕКТА - остаёмся на той же странице
         except Exception as e:
             print(str(e))
-            flash(f"При регистрации сотрудника произошла ошибка", "danger")
+            db.session.rollback()
     
     return render_template('employee/register.html', form=form)
 
@@ -52,13 +63,7 @@ def login():
             db.session.commit()
             login_user(employee, remember=form.remember.data)
             next_page = request.args.get('next')
-            flash(f"Поздравляем, {employee.first_name} {employee.last_name}! Вы успешно авторизованы", "success")
             return redirect(next_page) if next_page else redirect(url_for('main.index'))
-        else:
-            flash("Ошибка входа. Пожалуйста проверьте логин и пароль!", "danger")
-    else:
-        if request.method == 'POST':
-            flash("Ошибка валидации формы. Проверьте введенные данные!", "danger")
     
     return render_template('employee/login.html', form=form)
 

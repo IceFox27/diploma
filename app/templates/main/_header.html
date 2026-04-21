@@ -15,13 +15,16 @@
                 {% if current_user.avatar %}
                     <img src="{{ url_for('static', filename='upload/' + current_user.avatar) }}" 
                          alt="{{ current_user.first_name }} {{ current_user.last_name }}" 
-                         class="profile-avatar"
-                         title="{{ current_user.first_name }} {{ current_user.last_name }}">
+                         class="profile-avatar">
                 {% else %}
-                    <div class="profile-icon" title="{{ current_user.first_name }} {{ current_user.last_name }}">
+                    <div class="profile-icon">
                         {{ current_user.first_name[0] }}{{ current_user.last_name[0] }}
                     </div>
                 {% endif %}
+                <div class="profile-info">
+                    <span class="profile-name">{{ current_user.first_name }} {{ current_user.last_name }}</span>
+                    <span class="profile-role">{{ current_user.role.display_name if current_user.role else 'Сотрудник' }}</span>
+                </div>
             </a>
         {% else %}
             <a href="{{ url_for('employee.login') }}" class="header-login" id="loginBtn">Войти</a>

@@ -8,7 +8,7 @@ body {
     background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
     position: relative;
     overflow: hidden;
-    padding: 40px 0 60px;
+    padding: 140px 0 80px;
 }
 
 .register-page::before {
@@ -185,7 +185,7 @@ input:-webkit-autofill:focus {
 
 @media (max-width: 768px) {
     .register-page {
-        padding: 20px 0 40px;
+        padding: 120px 0 60px;
     }
     
     .register-card .card-header {
