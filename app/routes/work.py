@@ -11,8 +11,6 @@ work_bp = Blueprint('work', __name__, url_prefix='/work')
 @work_bp.route('/')
 @login_required
 def index():
-    """Главная страница рабочей области"""
-    # Получаем проекты пользователя
     if current_user.role.name == 'director':
         projects = Project.query.all()
     elif current_user.role.name == 'manager':
@@ -39,7 +37,6 @@ def index():
 @work_bp.route('/projects')
 @login_required
 def projects():
-    """Страница со всеми проектами пользователя"""
     if current_user.role.name == 'director':
         projects = Project.query.all()
     elif current_user.role.name == 'manager':

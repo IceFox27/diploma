@@ -11,21 +11,27 @@
         </div>
         
         {% if current_user.is_authenticated %}
-            <a href="{{ url_for('employee.profile') }}" class="header-profile">
-                {% if current_user.avatar %}
-                    <img src="{{ url_for('static', filename='upload/' + current_user.avatar) }}" 
-                         alt="{{ current_user.first_name }} {{ current_user.last_name }}" 
-                         class="profile-avatar">
-                {% else %}
-                    <div class="profile-icon">
-                        {{ current_user.first_name[0] }}{{ current_user.last_name[0] }}
+            <div class="header-right">
+                <a href="{{ url_for('work.index') }}" class="work-portal-btn">
+                    <i class="bi bi-briefcase-fill"></i>
+                    <span>Рабочий портал</span>
+                </a>
+                <a href="{{ url_for('employee.profile') }}" class="header-profile">
+                    {% if current_user.avatar %}
+                        <img src="{{ url_for('static', filename='upload/' + current_user.avatar) }}" 
+                             alt="{{ current_user.first_name }} {{ current_user.last_name }}" 
+                             class="profile-avatar">
+                    {% else %}
+                        <div class="profile-icon">
+                            {{ current_user.first_name[0] }}{{ current_user.last_name[0] }}
+                        </div>
+                    {% endif %}
+                    <div class="profile-info">
+                        <span class="profile-name">{{ current_user.first_name }} {{ current_user.last_name }}</span>
+                        <span class="profile-role">{{ current_user.role.display_name if current_user.role else 'Сотрудник' }}</span>
                     </div>
-                {% endif %}
-                <div class="profile-info">
-                    <span class="profile-name">{{ current_user.first_name }} {{ current_user.last_name }}</span>
-                    <span class="profile-role">{{ current_user.role.display_name if current_user.role else 'Сотрудник' }}</span>
-                </div>
-            </a>
+                </a>
+            </div>
         {% else %}
             <a href="{{ url_for('employee.login') }}" class="header-login" id="loginBtn">Войти</a>
         {% endif %}
