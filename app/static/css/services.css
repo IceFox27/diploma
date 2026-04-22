@@ -1,0 +1,449 @@
+.services-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container-services {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #ff6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+}
+
+.section-title p {
+    font-size: 18px;
+    color: #94a3b8;
+}
+
+.services-hero {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 120px 20px 60px;
+}
+
+.services-hero-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.services-hero-title {
+    font-size: 56px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.services-hero-title .orange {
+    background: linear-gradient(135deg, #ff6600, #ff9944);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.services-hero-subtitle {
+    font-size: 20px;
+    color: #cbd5e1;
+    margin-bottom: 40px;
+}
+
+.services-main {
+    padding: 40px 0 60px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.service-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    border-radius: 24px;
+    padding: 32px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 102, 0, 0.5);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+}
+
+.service-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.service-card h3 {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.service-card p {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.service-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.service-list li {
+    color: #cbd5e1;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.service-list li i {
+    color: #ff6600;
+    font-size: 14px;
+}
+
+.service-price {
+    color: #ff6600;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.service-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #ff6600, #e05a00);
+    color: white;
+    text-decoration: none;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.service-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
+    background: linear-gradient(135deg, #e05a00, #cc4e00);
+}
+
+.services-process {
+    padding: 80px 0;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.step {
+    text-align: center;
+    padding: 30px;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 102, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 102, 0, 0.3);
+}
+
+.step-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: #ff6600;
+    opacity: 0.5;
+    margin-bottom: 15px;
+}
+
+.step h4 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.step p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.services-warranty {
+    padding: 80px 0;
+}
+
+.warranty-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.warranty-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #ff6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+}
+
+.warranty-content p {
+    color: #cbd5e1;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.warranty-features {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.warranty-features .feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 102, 0, 0.1);
+}
+
+.warranty-features .feature i {
+    font-size: 24px;
+    color: #ff6600;
+}
+
+.warranty-features .feature span {
+    color: #cbd5e1;
+}
+
+.warranty-image img {
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+}
+
+.services-callback {
+    padding: 60px 0 100px;
+}
+
+.callback-card {
+    background: linear-gradient(135deg, rgba(255, 102, 0, 0.1), rgba(255, 102, 0, 0.05));
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    border-radius: 32px;
+    padding: 50px;
+    text-align: center;
+}
+
+.callback-card h3 {
+    font-size: 32px;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.callback-card p {
+    color: #94a3b8;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.callback-form-simple {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.callback-form-simple input,
+.callback-form-simple select {
+    flex: 1;
+    min-width: 180px;
+    padding: 14px 18px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+}
+
+.callback-form-simple input:focus,
+.callback-form-simple select:focus {
+    outline: none;
+    border-color: #ff6600;
+}
+
+.callback-form-simple input::placeholder {
+    color: #64748b;
+}
+
+.callback-form-simple select option {
+    background: #1E293B;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #ff6600, #e05a00);
+    color: white;
+    text-decoration: none;
+    border-radius: 40px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 102, 0, 0.3);
+    background: linear-gradient(135deg, #e05a00, #cc4e00);
+}
+
+@media (max-width: 968px) {
+    .services-hero-title {
+        font-size: 42px;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .warranty-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .section-title h2 {
+        font-size: 32px;
+    }
+    
+    .process-steps {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .services-hero {
+        padding: 100px 20px 40px;
+        min-height: 30vh;
+    }
+    
+    .services-hero-title {
+        font-size: 32px;
+    }
+    
+    .services-hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .service-card {
+        padding: 24px;
+    }
+    
+    .service-card h3 {
+        font-size: 20px;
+    }
+    
+    .step {
+        padding: 20px;
+    }
+    
+    .step-number {
+        font-size: 36px;
+    }
+    
+    .step h4 {
+        font-size: 18px;
+    }
+    
+    .warranty-content h2 {
+        font-size: 28px;
+    }
+    
+    .callback-card {
+        padding: 30px 20px;
+    }
+    
+    .callback-card h3 {
+        font-size: 24px;
+    }
+    
+    .callback-form-simple {
+        flex-direction: column;
+    }
+    
+    .callback-form-simple input,
+    .callback-form-simple select,
+    .callback-form-simple button {
+        width: 100%;
+    }
+    
+    .btn-primary {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .process-steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .warranty-features .feature {
+        padding: 10px 16px;
+    }
+    
+    .warranty-features .feature i {
+        font-size: 20px;
+    }
+    
+    .warranty-features .feature span {
+        font-size: 14px;
+    }
+}

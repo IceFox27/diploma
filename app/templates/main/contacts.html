@@ -1,0 +1,222 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Контакты — Мой Дом ДВ{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contacts.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="contacts-page">
+    <section class="contacts-hero">
+        <div class="contacts-hero-container">
+            <h1 class="contacts-hero-title">
+                Наши <span class="orange">контакты</span>
+            </h1>
+            <p class="contacts-hero-subtitle">
+                Свяжитесь с нами удобным для вас способом
+            </p>
+        </div>
+    </section>
+
+    <section class="contacts-info">
+        <div class="container-contacts">
+            <div class="contacts-grid">
+                <div class="contacts-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Телефон</h3>
+                    <a href="tel:+79845555888">+7 (984) 555-58-88</a>
+                    <p>Ежедневно с 9:00 до 19:00</p>
+                </div>
+                <div class="contacts-card">
+                    <div class="contact-icon">✉️</div>
+                    <h3>Email</h3>
+                    <a href="mailto:info@moydomdv.ru">info@moydomdv.ru</a>
+                    <p>Ответим в течение 24 часов</p>
+                </div>
+                <div class="contacts-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Адрес офиса</h3>
+                    <p>г. Хабаровск, ул. Ленина, 50, офис 301</p>
+                    <p>Пн–Пт: 9:00–19:00, Сб: 10:00–15:00</p>
+                </div>
+                <div class="contacts-card">
+                    <div class="contact-icon">🕒</div>
+                    <h3>Режим работы</h3>
+                    <p>Понедельник — Пятница: 9:00 – 19:00</p>
+                    <p>Суббота: 10:00 – 15:00</p>
+                    <p>Воскресенье: выходной</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacts-social">
+        <div class="container-contacts">
+            <div class="section-title">
+                <h2>Мы в соцсетях</h2>
+                <p>Следите за нашими новостями и проектами</p>
+            </div>
+            <div class="social-grid">
+                <a href="#" class="social-card" target="_blank">
+                    <div class="social-icon">📘</div>
+                    <h3>VKontakte</h3>
+                    <p>vk.com/moydomdv</p>
+                </a>
+                <a href="#" class="social-card" target="_blank">
+                    <div class="social-icon">📺</div>
+                    <h3>Telegram</h3>
+                    <p>t.me/moydomdv</p>
+                </a>
+                <a href="#" class="social-card" target="_blank">
+                    <div class="social-icon">📷</div>
+                    <h3>Instagram</h3>
+                    <p>instagram.com/moydomdv</p>
+                </a>
+                <a href="#" class="social-card" target="_blank">
+                    <div class="social-icon">🎬</div>
+                    <h3>YouTube</h3>
+                    <p>youtube.com/c/moydomdv</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacts-map">
+        <div class="container-contacts">
+            <div class="section-title">
+                <h2>Как нас найти</h2>
+                <p>Мы находимся в центре Хабаровска</p>
+            </div>
+            <div class="map-card">
+                <div class="map-placeholder">
+                    <div class="map-content">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <p>г. Хабаровск, ул. Ленина, 50, офис 301</p>
+                        <small>Карта загружается... (здесь будет Яндекс.Карта)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacts-feedback" id="feedback">
+        <div class="container-contacts">
+            <div class="feedback-card">
+                <h2>Напишите нам</h2>
+                <p>Оставьте сообщение, и мы свяжемся с вами в ближайшее время</p>
+                
+                <form class="feedback-form" id="feedbackForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ваше имя <span class="required">*</span></label>
+                            <input type="text" name="name" required placeholder="Иван Иванов">
+                        </div>
+                        <div class="form-group">
+                            <label>Телефон <span class="required">*</span></label>
+                            <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="ivanov@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Тема <span class="required">*</span></label>
+                            <select name="subject" required>
+                                <option value="">Выберите тему</option>
+                                <option value="consultation">Консультация</option>
+                                <option value="estimate">Расчёт сметы</option>
+                                <option value="cooperation">Сотрудничество</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Сообщение <span class="required">*</span></label>
+                        <textarea name="message" rows="5" required placeholder="Опишите ваш вопрос или пожелания..."></textarea>
+                    </div>
+                    
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="consent" required>
+                        <label for="consent">Я даю согласие на обработку персональных данных <span class="required">*</span></label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Отправить сообщение</button>
+                </form>
+                
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <h3>Сообщение отправлено!</h3>
+                    <p>Спасибо за обращение. Наш менеджер свяжется с вами в ближайшее время.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacts-requisites">
+        <div class="container-contacts">
+            <div class="requisites-card">
+                <h2>Реквизиты компании</h2>
+                <div class="requisites-grid">
+                    <div class="requisite-item">
+                        <span class="requisite-label">Полное наименование:</span>
+                        <span class="requisite-value">ООО «Мой Дом ДВ»</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">ИНН:</span>
+                        <span class="requisite-value">2721240891</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">КПП:</span>
+                        <span class="requisite-value">272101001</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">ОГРН:</span>
+                        <span class="requisite-value">1192724002305</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">Юридический адрес:</span>
+                        <span class="requisite-value">680013, Хабаровский край, г. Хабаровск, Тихий пер., д. 15</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">Банк:</span>
+                        <span class="requisite-value">Дальневосточный банк ПАО Сбербанк</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">БИК:</span>
+                        <span class="requisite-value">040813608</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">Расчётный счёт:</span>
+                        <span class="requisite-value">40702810870010004567</span>
+                    </div>
+                    <div class="requisite-item">
+                        <span class="requisite-label">Корр. счёт:</span>
+                        <span class="requisite-value">30101810600000000608</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Здесь будет отправка на сервер (позже)
+        // Пока просто показываем сообщение об успехе
+        
+        document.getElementById('feedbackForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+        
+        // Прокрутка к сообщению
+        document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+</script>
+{% endblock %}

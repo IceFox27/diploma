@@ -1,0 +1,238 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Блог — Мой Дом ДВ{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="blog-page">
+    <section class="blog-hero">
+        <div class="blog-hero-container">
+            <h1 class="blog-hero-title">
+                Наш <span class="orange">блог</span>
+            </h1>
+            <p class="blog-hero-subtitle">
+                Полезные статьи о строительстве, ремонте и дизайне интерьеров
+            </p>
+        </div>
+    </section>
+
+    <section class="blog-filter">
+        <div class="container-blog">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Все статьи</button>
+                <button class="filter-btn" data-filter="building">Строительство</button>
+                <button class="filter-btn" data-filter="repair">Ремонт</button>
+                <button class="filter-btn" data-filter="design">Дизайн</button>
+                <button class="filter-btn" data-filter="advice">Советы</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-grid-section">
+        <div class="container-blog">
+            <div class="blog-grid">
+                <div class="blog-item" data-category="building">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/1E293B/ff6600?text=Строительство+дома" alt="Строительство дома">
+                        <div class="blog-category">Строительство</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 15 марта 2026</span>
+                            <span><i class="bi bi-eye"></i> 2 345</span>
+                        </div>
+                        <h3>Как выбрать участок для строительства дома</h3>
+                        <p>Рассказываем на что обратить внимание при выборе земельного участка: геология, коммуникации, подъездные пути и юридические нюансы.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="repair">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/334155/ff6600?text=Ремонт+квартиры" alt="Ремонт квартиры">
+                        <div class="blog-category">Ремонт</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 10 марта 2026</span>
+                            <span><i class="bi bi-eye"></i> 1 892</span>
+                        </div>
+                        <h3>Этапы ремонта квартиры: от идеи до ключей</h3>
+                        <p>Подробный гид по всем этапам ремонта: планирование, черновые работы, чистовая отделка, установка сантехники и мебели.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="design">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/475569/ff6600?text=Дизайн+интерьера" alt="Дизайн интерьера">
+                        <div class="blog-category">Дизайн</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 5 марта 2026</span>
+                            <span><i class="bi bi-eye"></i> 3 421</span>
+                        </div>
+                        <h3>Тренды в дизайне интерьеров 2026 года</h3>
+                        <p>Актуальные направления, цвета, материалы и стили, которые будут в моде в этом году. Вдохновение для вашего дома.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="advice">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/1E293B/ff8844?text=Выбор+материалов" alt="Выбор материалов">
+                        <div class="blog-category">Советы</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 28 февраля 2026</span>
+                            <span><i class="bi bi-eye"></i> 1 234</span>
+                        </div>
+                        <h3>Как не ошибиться с выбором стройматериалов</h3>
+                        <p>Советы профессионалов по выбору качественных и безопасных материалов для строительства и ремонта.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="building">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/334155/ff8844?text=Фундамент" alt="Фундамент">
+                        <div class="blog-category">Строительство</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 20 февраля 2026</span>
+                            <span><i class="bi bi-eye"></i> 987</span>
+                        </div>
+                        <h3>Какой фундамент выбрать для загородного дома</h3>
+                        <p>Разбираем виды фундаментов: ленточный, плитный, свайный. Плюсы, минусы и рекомендации по выбору.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="design">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/475569/ff8844?text=Цвета+в+интерьере" alt="Цвета в интерьере">
+                        <div class="blog-category">Дизайн</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 15 февраля 2026</span>
+                            <span><i class="bi bi-eye"></i> 2 156</span>
+                        </div>
+                        <h3>Психология цвета в интерьере</h3>
+                        <p>Как цвет стен и мебели влияет на настроение и атмосферу в доме. Советы по выбору цветовой гаммы для разных комнат.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="repair">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/1E293B/ff6600?text=Сантехника" alt="Сантехника">
+                        <div class="blog-category">Ремонт</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 8 февраля 2026</span>
+                            <span><i class="bi bi-eye"></i> 789</span>
+                        </div>
+                        <h3>Как выбрать сантехнику для ванной комнаты</h3>
+                        <p>Обзор современных решений: унитазы, раковины, душевые кабины, смесители. На что обратить внимание при выборе.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="advice">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/334155/ff6600?text=Бюджет+ремонта" alt="Бюджет ремонта">
+                        <div class="blog-category">Советы</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 1 февраля 2026</span>
+                            <span><i class="bi bi-eye"></i> 1 567</span>
+                        </div>
+                        <h3>Как рассчитать бюджет на ремонт</h3>
+                        <p>Пошаговая инструкция по составлению сметы и распределению бюджета на ремонт квартиры или дома.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item" data-category="building">
+                    <div class="blog-image">
+                        <img src="https://placehold.co/600x400/475569/ff6600?text=Кровля" alt="Кровля">
+                        <div class="blog-category">Строительство</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="bi bi-calendar"></i> 25 января 2026</span>
+                            <span><i class="bi bi-eye"></i> 654</span>
+                        </div>
+                        <h3>Как выбрать кровельные материалы</h3>
+                        <p>Сравнение металлочерепицы, профнастила, мягкой кровли и керамической черепицы. Плюсы и минусы каждого варианта.</p>
+                        <a href="#" class="blog-link">Читать далее →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-pagination">
+        <div class="container-blog">
+            <div class="pagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn next">→</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-subscribe">
+        <div class="container-blog">
+            <div class="subscribe-card">
+                <h3>Подпишитесь на наши новости</h3>
+                <p>Получайте свежие статьи и полезные советы первыми</p>
+                <form class="subscribe-form" id="subscribeForm">
+                    <input type="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+                <div class="subscribe-success" id="subscribeSuccess" style="display: none;">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Спасибо за подписку!</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.querySelectorAll('.filter-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const filterValue = this.getAttribute('data-filter');
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            document.querySelectorAll('.blog-item').forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        this.style.display = 'none';
+        document.getElementById('subscribeSuccess').style.display = 'flex';
+    });
+</script>
+{% endblock %}

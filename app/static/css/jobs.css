@@ -1,0 +1,449 @@
+.jobs-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container-jobs {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #ff6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+}
+
+.section-title p {
+    font-size: 18px;
+    color: #94a3b8;
+}
+
+.jobs-hero {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 120px 20px 60px;
+}
+
+.jobs-hero-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.jobs-hero-title {
+    font-size: 56px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.jobs-hero-title .orange {
+    background: linear-gradient(135deg, #ff6600, #ff9944);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.jobs-hero-subtitle {
+    font-size: 20px;
+    color: #cbd5e1;
+    margin-bottom: 40px;
+}
+
+.jobs-benefits {
+    padding: 60px 0;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.benefit-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 102, 0, 0.5);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+}
+
+.benefit-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.benefit-card h3 {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.benefit-card p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.jobs-vacancies {
+    padding: 60px 0;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.vacancies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.vacancy-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    border-radius: 20px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.vacancy-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 102, 0, 0.4);
+}
+
+.vacancy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.vacancy-header h3 {
+    font-size: 20px;
+    color: white;
+    margin: 0;
+}
+
+.vacancy-salary {
+    color: #ff6600;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.vacancy-desc {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.vacancy-requirements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.req-tag {
+    background: rgba(255, 102, 0, 0.1);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #cbd5e1;
+}
+
+.vacancy-btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 102, 0, 0.4);
+    color: #ff6600;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vacancy-btn:hover {
+    background: rgba(255, 102, 0, 0.1);
+    border-color: #ff6600;
+    transform: translateY(-2px);
+}
+
+.jobs-application {
+    padding: 80px 0 100px;
+}
+
+.application-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    border-radius: 32px;
+    padding: 50px;
+}
+
+.application-card h2 {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #ff6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.application-card > p {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 40px;
+}
+
+.application-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group.full-width {
+    width: 100%;
+    flex: 100%;
+}
+
+.form-group label {
+    display: block;
+    color: #cbd5e1;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.required {
+    color: #f87171;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 102, 0, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ff6600;
+    background: rgba(15, 23, 42, 1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #64748b;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 102, 0, 0.1);
+    border: 1px solid rgba(255, 102, 0, 0.3);
+    border-radius: 40px;
+    color: #ff6600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    background: rgba(255, 102, 0, 0.2);
+}
+
+.file-name {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.form-group small {
+    display: block;
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.form-checkbox input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.form-checkbox label {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #ff6600, #e05a00);
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 102, 0, 0.4);
+    background: linear-gradient(135deg, #e05a00, #cc4e00);
+}
+
+.success-message {
+    text-align: center;
+    padding: 40px;
+}
+
+.success-message i {
+    font-size: 64px;
+    color: #4ade80;
+    margin-bottom: 20px;
+}
+
+.success-message h3 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.success-message p {
+    color: #94a3b8;
+}
+
+@media (max-width: 968px) {
+    .jobs-hero-title {
+        font-size: 42px;
+    }
+    
+    .section-title h2 {
+        font-size: 32px;
+    }
+    
+    .vacancies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .application-card {
+        padding: 30px;
+    }
+    
+    .application-card h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .jobs-hero {
+        padding: 100px 20px 40px;
+        min-height: 30vh;
+    }
+    
+    .jobs-hero-title {
+        font-size: 32px;
+    }
+    
+    .jobs-hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .vacancies-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .vacancy-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .application-card {
+        padding: 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .file-upload {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

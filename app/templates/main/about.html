@@ -1,0 +1,192 @@
+{% extends 'main/base.html' %}
+
+{% block title %}О компании — Мой Дом ДВ{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <section class="about-hero">
+        <div class="about-hero-container">
+            <h1 class="about-hero-title">
+                О компании <span class="orange">«Мой Дом ДВ»</span>
+            </h1>
+            <p class="about-hero-subtitle">
+                Строим дома и создаём уют с 2014 года
+            </p>
+        </div>
+    </section>
+
+    <section class="about-history">
+        <div class="container-about">
+            <div class="history-grid">
+                <div class="history-content">
+                    <h2>Наша история</h2>
+                    <p>Компания «Мой Дом ДВ» основана в 2014 году. За это время мы прошли путь от небольших ремонтов до строительства крупных объектов под ключ.</p>
+                    <p>Сегодня мы — команда из 50+ профессионалов: архитекторов, дизайнеров, инженеров, строителей. Каждый сотрудник имеет профильное образование и опыт работы от 8 лет.</p>
+                    <p>Наша миссия — создавать пространства, в которых хочется жить и работать. Мы подходим к каждому проекту индивидуально, учитывая все пожелания клиента и особенности объекта.</p>
+                    <p>За 10 лет работы мы реализовали более 120 проектов — от небольших квартир до загородных домов площадью 300+ м². Каждый объект — это уникальная история, где мы учли все пожелания клиента.</p>
+                    <div class="history-stats">
+                        <div class="stat">
+                            <span class="stat-number">120+</span>
+                            <span class="stat-label">Проектов</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label">Довольных клиентов</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">10 лет</span>
+                            <span class="stat-label">На рынке</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Специалистов</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="history-image">
+                    <img src="https://placehold.co/500x450/1E293B/ff6600?text=10+лет+успешной+работы" alt="10 лет успешной работы">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-features">
+        <div class="container-about">
+            <div class="section-title">
+                <h2>Почему выбирают нас</h2>
+                <p>10 преимуществ работы с «Мой Дом ДВ»</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Прозрачная смета</h3>
+                    <p>Фиксированная стоимость без скрытых платежей</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏱️</div>
+                    <h3>Соблюдение сроков</h3>
+                    <p>Чёткое планирование и контроль каждого этапа</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Гарантия 5 лет</h3>
+                    <p>На все виды работ</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Ежедневный отчёт</h3>
+                    <p>Фото и видео в Telegram</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>50+ специалистов</h3>
+                    <p>Команда профессионалов</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Соблюдение ГОСТ</h3>
+                    <p>Все работы по стандартам</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-team">
+        <div class="container-about">
+            <div class="section-title">
+                <h2>Ключевые сотрудники</h2>
+                <p>Наша команда — профессионалы с многолетним опытом</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">АК</div>
+                    <h4>Алексей Ковалёв</h4>
+                    <span>Генеральный директор</span>
+                    <p>15 лет в строительстве</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">МП</div>
+                    <h4>Марина Петрова</h4>
+                    <span>Главный архитектор</span>
+                    <p>100+ дизайн-проектов</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">ДС</div>
+                    <h4>Дмитрий Соколов</h4>
+                    <span>Руководитель строительства</span>
+                    <p>50+ объектов под ключ</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">ЕВ</div>
+                    <h4>Елена Воронина</h4>
+                    <span>Ведущий дизайнер</span>
+                    <p>12 лет в индустрии</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-principles">
+        <div class="container-about">
+            <div class="principles-content">
+                <h2>Наши принципы работы</h2>
+                <div class="principles-grid">
+                    <div class="principle-item">
+                        <i class="bi bi-chat-dots"></i>
+                        <div>
+                            <h4>Индивидуальный подход</h4>
+                            <p>Учитываем все пожелания и бюджет клиента</p>
+                        </div>
+                    </div>
+                    <div class="principle-item">
+                        <i class="bi bi-box-seam"></i>
+                        <div>
+                            <h4>Качественные материалы</h4>
+                            <p>Работаем только с проверенными поставщиками</p>
+                        </div>
+                    </div>
+                    <div class="principle-item">
+                        <i class="bi bi-shield-check"></i>
+                        <div>
+                            <h4>Полная ответственность</h4>
+                            <p>Гарантия на все этапы работ</p>
+                        </div>
+                    </div>
+                    <div class="principle-item">
+                        <i class="bi bi-graph-up"></i>
+                        <div>
+                            <h4>Постоянное развитие</h4>
+                            <p>Следим за новыми технологиями</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-docs">
+        <div class="container-about">
+            <div class="docs-grid">
+                <div class="docs-content">
+                    <h2>Лицензии и сертификаты</h2>
+                    <p>Мы имеем все необходимые разрешения для выполнения строительных работ любой сложности.</p>
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i> СРО «Строители Хабаровского края»</li>
+                        <li><i class="bi bi-check-circle-fill"></i> ISO 9001:2015</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Лицензия МЧС</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Сертификат соответствия ГОСТ</li>
+                    </ul>
+                </div>
+                <div class="docs-image">
+                    <img src="https://placehold.co/400x300/1E293B/ff6600?text=Лицензии" alt="Лицензии">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

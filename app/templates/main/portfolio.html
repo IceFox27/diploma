@@ -1,0 +1,172 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Портфолио — Мой Дом ДВ{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="portfolio-page">
+    <section class="portfolio-hero">
+        <div class="portfolio-hero-container">
+            <h1 class="portfolio-hero-title">
+                Наше <span class="orange">портфолио</span>
+            </h1>
+            <p class="portfolio-hero-subtitle">
+                Реализованные проекты, которыми мы гордимся
+            </p>
+        </div>
+    </section>
+
+    <section class="portfolio-filter">
+        <div class="container-portfolio">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Все проекты</button>
+                <button class="filter-btn" data-filter="house">Строительство домов</button>
+                <button class="filter-btn" data-filter="repair">Ремонт квартир</button>
+                <button class="filter-btn" data-filter="design">Дизайн интерьеров</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-grid-section">
+        <div class="container-portfolio">
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="house">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/1E293B/ff6600?text=Коттедж+Березки" alt="Коттедж Березки">
+                        <div class="portfolio-overlay">
+                            <h3>Коттедж «Берёзки»</h3>
+                            <p>Строительство дома 180 м² под ключ</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="repair">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/334155/ff6600?text=ЖК+Авангард" alt="ЖК Авангард">
+                        <div class="portfolio-overlay">
+                            <h3>ЖК «Авангард»</h3>
+                            <p>Капитальный ремонт квартиры 75 м²</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="design">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/475569/ff6600?text=Лофт+Центральный" alt="Лофт Центральный">
+                        <div class="portfolio-overlay">
+                            <h3>Лофт «Центральный»</h3>
+                            <p>Дизайн-проект и ремонт 120 м²</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="house">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/1E293B/ff8844?text=Дом+Парковый" alt="Дом Парковый">
+                        <div class="portfolio-overlay">
+                            <h3>Дом «Парковый»</h3>
+                            <p>Коттедж 250 м² с ландшафтным дизайном</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="repair">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/334155/ff8844?text=Апартаменты+Восток" alt="Апартаменты Восток">
+                        <div class="portfolio-overlay">
+                            <h3>Апартаменты «Восток»</h3>
+                            <p>Евроремонт 95 м² в новостройке</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="design">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/475569/ff8844?text=Студия+Современная" alt="Студия Современная">
+                        <div class="portfolio-overlay">
+                            <h3>Студия «Современная»</h3>
+                            <p>Дизайн-проект студии 45 м²</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="house">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/1E293B/ff6600?text=Таунхаус+Зелёный" alt="Таунхаус Зелёный">
+                        <div class="portfolio-overlay">
+                            <h3>Таунхаус «Зелёный»</h3>
+                            <p>Строительство 4-х секционного таунхауса</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="repair">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/334155/ff6600?text=Хрущёвка+Новая" alt="Хрущёвка Новая">
+                        <div class="portfolio-overlay">
+                            <h3>Квартира 50 м²</h3>
+                            <p>Косметический ремонт в хрущёвке</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="design">
+                    <div class="portfolio-image">
+                        <img src="https://placehold.co/600x450/475569/ff6600?text=Кантри+Дом" alt="Кантри Дом">
+                        <div class="portfolio-overlay">
+                            <h3>Загородный дом «Кантри»</h3>
+                            <p>Дизайн-проект деревянного дома</p>
+                            <a href="#" class="portfolio-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-cta">
+        <div class="container-portfolio">
+            <div class="cta-card">
+                <h3>Хотите реализовать свой проект?</h3>
+                <p>Свяжитесь с нами, и мы создадим для вас идеальное пространство</p>
+                <a href="#callback" class="btn-primary">Обсудить проект</a>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filterValue = button.getAttribute('data-filter');
+                
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.classList.remove('hide');
+                    } else {
+                        item.classList.add('hide');
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

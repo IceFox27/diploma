@@ -1,0 +1,209 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Услуги — Мой Дом ДВ{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="services-page">
+    <section class="services-hero">
+        <div class="services-hero-container">
+            <h1 class="services-hero-title">
+                Наши <span class="orange">услуги</span>
+            </h1>
+            <p class="services-hero-subtitle">
+                Полный цикл работ по созданию вашего идеального пространства
+            </p>
+        </div>
+    </section>
+
+    <section class="services-main">
+        <div class="container-services">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Строительство домов</h3>
+                    <p>Строительство коттеджей, таунхаусов и загородных домов под ключ. Работаем с кирпичом, газоблоком, деревом.</p>
+                    <ul class="service-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Проектирование и согласование</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Фундамент любых типов</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Возведение стен и перекрытий</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Кровельные работы</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Инженерные коммуникации</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Отделка под ключ</li>
+                    </ul>
+                    <div class="service-price">от 45 000 ₽/м²</div>
+                    <a href="#callback" class="service-btn">Заказать расчёт</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🛠️</div>
+                    <h3>Ремонт квартир</h3>
+                    <p>Косметический, капитальный и евроремонт квартир любой сложности. Гарантия качества до 5 лет.</p>
+                    <ul class="service-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Демонтажные работы</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Черновая отделка</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Электрика и сантехника</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Чистовая отделка</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Укладка плитки и ламината</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Установка дверей и плинтусов</li>
+                    </ul>
+                    <div class="service-price">от 12 000 ₽/м²</div>
+                    <a href="#callback" class="service-btn">Заказать расчёт</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Дизайн интерьеров</h3>
+                    <p>Разработка уникальных дизайн-проектов с 3D-визуализацией. Учтём все ваши пожелания и бюджет.</p>
+                    <ul class="service-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Обмерный план</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Планировочные решения</li>
+                        <li><i class="bi bi-check-circle-fill"></i> 3D-визуализация</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Подбор материалов и мебели</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Рабочая документация</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Авторский надзор</li>
+                    </ul>
+                    <div class="service-price">от 2 500 ₽/м²</div>
+                    <a href="#callback" class="service-btn">Заказать расчёт</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📐</div>
+                    <h3>Архитектурное проектирование</h3>
+                    <p>Создание архитектурных планов, фасадов и конструктивных решений для вашего дома.</p>
+                    <ul class="service-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Эскизный проект</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Архитектурный раздел</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Конструктивный раздел</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Инженерные сети</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Дизайн-проект фасада</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Ландшафтный дизайн</li>
+                    </ul>
+                    <div class="service-price">от 350 000 ₽/проект</div>
+                    <a href="#callback" class="service-btn">Заказать расчёт</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Инженерные работы</h3>
+                    <p>Монтаж и подключение всех инженерных коммуникаций любой сложности.</p>
+                    <ul class="service-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Электромонтажные работы</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Водоснабжение и канализация</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Отопление и тёплые полы</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Вентиляция и кондиционирование</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Слаботочные сети</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Монтаж котлов и радиаторов</li>
+                    </ul>
+                    <div class="service-price">от 8 000 ₽/м²</div>
+                    <a href="#callback" class="service-btn">Заказать расчёт</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🌿</div>
+                    <h3>Ландшафтный дизайн</h3>
+                    <p>Создание гармоничного и уютного пространства вокруг вашего дома.</p>
+                    <ul class="service-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Благоустройство территории</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Подпорные стены и дорожки</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Посадка деревьев и кустарников</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Газоны и цветники</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Автополив</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Освещение участка</li>
+                    </ul>
+                    <div class="service-price">от 15 000 ₽/сотка</div>
+                    <a href="#callback" class="service-btn">Заказать расчёт</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-process">
+        <div class="container-services">
+            <div class="section-title">
+                <h2>Как мы работаем</h2>
+                <p>Простой и прозрачный процесс сотрудничества</p>
+            </div>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h4>Заявка</h4>
+                    <p>Вы оставляете заявку на сайте или звоните нам</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h4>Встреча</h4>
+                    <p>Выезжаем на объект, обсуждаем детали, замеряем помещение</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h4>Расчёт</h4>
+                    <p>Готовим подробную смету и заключаем договор</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <h4>Работы</h4>
+                    <p>Выполняем работы с ежедневным отчётом в Telegram</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">05</div>
+                    <h4>Сдача</h4>
+                    <p>Принимаете работу и получаете гарантию 5 лет</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-warranty">
+        <div class="container-services">
+            <div class="warranty-grid">
+                <div class="warranty-content">
+                    <h2>Гарантия качества 5 лет</h2>
+                    <p>Мы уверены в качестве наших работ и предоставляем расширенную гарантию на все виды услуг. За 10 лет работы у нас почти нет отрицательных отзывов — наши клиенты рекомендуют нас друзьям и знакомым.</p>
+                    <div class="warranty-features">
+                        <div class="feature">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Бесплатное устранение недостатков</span>
+                        </div>
+                        <div class="feature">
+                            <i class="bi bi-clock-history"></i>
+                            <span>Соблюдение сроков по договору</span>
+                        </div>
+                        <div class="feature">
+                            <i class="bi bi-file-text"></i>
+                            <span>Прозрачная смета без скрытых платежей</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="warranty-image">
+                    <img src="https://placehold.co/450x350/1E293B/ff6600?text=5+лет+гарантии" alt="5 лет гарантии">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-callback" id="callback">
+        <div class="container-services">
+            <div class="callback-card">
+                <h3>Нужна консультация?</h3>
+                <p>Оставьте заявку, и наш специалист свяжется с вами в ближайшее время</p>
+                <form method="post" class="callback-form-simple">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="tel" name="phone" placeholder="Номер телефона" required>
+                    <select name="service">
+                        <option value="building">Строительство дома</option>
+                        <option value="repair">Ремонт квартиры</option>
+                        <option value="design">Дизайн интерьера</option>
+                        <option value="project">Архитектурное проектирование</option>
+                    </select>
+                    <button type="submit" class="btn-primary">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

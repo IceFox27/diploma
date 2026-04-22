@@ -1,0 +1,276 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Работа в Мой Дом ДВ — Вакансии и карьера{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jobs.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="jobs-page">
+    <section class="jobs-hero">
+        <div class="jobs-hero-container">
+            <h1 class="jobs-hero-title">
+                Работа в <span class="orange">«Мой Дом ДВ»</span>
+            </h1>
+            <p class="jobs-hero-subtitle">
+                Строим будущее вместе — станьте частью нашей команды профессионалов
+            </p>
+        </div>
+    </section>
+
+    <section class="jobs-benefits">
+        <div class="container-jobs">
+            <div class="section-title">
+                <h2>Почему выбирают нас</h2>
+                <p>Условия работы, которые мы предлагаем</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Конкурентная зарплата</h3>
+                    <p>Стабильные выплаты, премии по результатам работы, ежегодная индексация</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3>Карьерный рост</h3>
+                    <p>Возможность профессионального развития и повышения квалификации</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏖️</div>
+                    <h3>Официальное трудоустройство</h3>
+                    <p>Полный соцпакет, оплачиваемый отпуск и больничные</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎓</div>
+                    <h3>Обучение</h3>
+                    <p>Курсы повышения квалификации за счёт компании</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏢</div>
+                    <h3>Комфортные условия</h3>
+                    <p>Современный офис и строительные площадки с хорошей оснащённостью</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">👥</div>
+                    <h3>Дружный коллектив</h3>
+                    <p>Корпоративные мероприятия и поддержка коллег</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="jobs-vacancies">
+        <div class="container-jobs">
+            <div class="section-title">
+                <h2>Открытые вакансии</h2>
+                <p>Присоединяйтесь к нашей команде</p>
+            </div>
+            <div class="vacancies-grid">
+                <div class="vacancy-card">
+                    <div class="vacancy-header">
+                        <h3>Архитектор-проектировщик</h3>
+                        <span class="vacancy-salary">от 80 000 ₽</span>
+                    </div>
+                    <p class="vacancy-desc">Разработка архитектурных решений, создание чертежей и 3D-моделей жилых и коммерческих объектов.</p>
+                    <div class="vacancy-requirements">
+                        <span class="req-tag">Высшее профильное</span>
+                        <span class="req-tag">AutoCAD</span>
+                        <span class="req-tag">Revit</span>
+                        <span class="req-tag">от 3 лет опыта</span>
+                    </div>
+                    <button class="vacancy-btn" data-position="Архитектор-проектировщик">Откликнуться</button>
+                </div>
+
+                <div class="vacancy-card">
+                    <div class="vacancy-header">
+                        <h3>Прораб (руководитель проекта)</h3>
+                        <span class="vacancy-salary">от 100 000 ₽</span>
+                    </div>
+                    <p class="vacancy-desc">Организация строительного процесса, контроль сроков и качества, управление бригадами.</p>
+                    <div class="vacancy-requirements">
+                        <span class="req-tag">Строительное образование</span>
+                        <span class="req-tag">Опыт от 5 лет</span>
+                        <span class="req-tag">Знание смет</span>
+                        <span class="req-tag">Ответственность</span>
+                    </div>
+                    <button class="vacancy-btn" data-position="Прораб">Откликнуться</button>
+                </div>
+
+                <div class="vacancy-card">
+                    <div class="vacancy-header">
+                        <h3>Дизайнер интерьеров</h3>
+                        <span class="vacancy-salary">от 70 000 ₽</span>
+                    </div>
+                    <p class="vacancy-desc">Создание дизайн-проектов, 3D-визуализация, подбор материалов, авторский надзор.</p>
+                    <div class="vacancy-requirements">
+                        <span class="req-tag">Портфолио</span>
+                        <span class="req-tag">3ds Max</span>
+                        <span class="req-tag">SketchUp</span>
+                        <span class="req-tag">от 3 лет опыта</span>
+                    </div>
+                    <button class="vacancy-btn" data-position="Дизайнер интерьеров">Откликнуться</button>
+                </div>
+
+                <div class="vacancy-card">
+                    <div class="vacancy-header">
+                        <h3>Инженер-сметчик</h3>
+                        <span class="vacancy-salary">от 65 000 ₽</span>
+                    </div>
+                    <p class="vacancy-desc">Составление сметной документации, расчёт материалов, контроль бюджета проектов.</p>
+                    <div class="vacancy-requirements">
+                        <span class="req-tag">Высшее профильное</span>
+                        <span class="req-tag">Гранд-Смета</span>
+                        <span class="req-tag">от 3 лет опыта</span>
+                    </div>
+                    <button class="vacancy-btn" data-position="Инженер-сметчик">Откликнуться</button>
+                </div>
+
+                <div class="vacancy-card">
+                    <div class="vacancy-header">
+                        <h3>Мастер отделочных работ</h3>
+                        <span class="vacancy-salary">от 60 000 ₽</span>
+                    </div>
+                    <p class="vacancy-desc">Выполнение отделочных работ, штукатурка, шпаклёвка, покраска, укладка плитки.</p>
+                    <div class="vacancy-requirements">
+                        <span class="req-tag">Опыт от 3 лет</span>
+                        <span class="req-tag">Навыки работы с инструментом</span>
+                        <span class="req-tag">Ответственность</span>
+                    </div>
+                    <button class="vacancy-btn" data-position="Мастер отделочных работ">Откликнуться</button>
+                </div>
+
+                <div class="vacancy-card">
+                    <div class="vacancy-header">
+                        <h3>Электромонтажник</h3>
+                        <span class="vacancy-salary">от 55 000 ₽</span>
+                    </div>
+                    <p class="vacancy-desc">Монтаж электропроводки, сборка щитов, подключение электрооборудования.</p>
+                    <div class="vacancy-requirements">
+                        <span class="req-tag">Допуск по электробезопасности</span>
+                        <span class="req-tag">Опыт от 2 лет</span>
+                        <span class="req-tag">Схемы и чертежи</span>
+                    </div>
+                    <button class="vacancy-btn" data-position="Электромонтажник">Откликнуться</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="jobs-application" id="application">
+        <div class="container-jobs">
+            <div class="application-card">
+                <h2>Отправить заявку на трудоустройство</h2>
+                <p>Заполните форму, и наш HR-специалист свяжется с вами</p>
+                
+                <form class="application-form" id="jobForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ФИО <span class="required">*</span></label>
+                            <input type="text" name="full_name" required placeholder="Иванов Иван Иванович">
+                        </div>
+                        <div class="form-group">
+                            <label>Телефон <span class="required">*</span></label>
+                            <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="email" name="email" required placeholder="ivanov@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Вакансия <span class="required">*</span></label>
+                            <select name="position" id="positionSelect" required>
+                                <option value="">Выберите вакансию</option>
+                                <option value="Архитектор-проектировщик">Архитектор-проектировщик</option>
+                                <option value="Прораб">Прораб</option>
+                                <option value="Дизайнер интерьеров">Дизайнер интерьеров</option>
+                                <option value="Инженер-сметчик">Инженер-сметчик</option>
+                                <option value="Мастер отделочных работ">Мастер отделочных работ</option>
+                                <option value="Электромонтажник">Электромонтажник</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>Опыт работы</label>
+                            <textarea name="experience" rows="3" placeholder="Расскажите о вашем опыте, местах работы, выполненных проектах..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>Ссылка на портфолио (если есть)</label>
+                            <input type="url" name="portfolio" placeholder="https://...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>Прикрепить резюме</label>
+                            <div class="file-upload">
+                                <input type="file" name="resume" accept=".pdf,.doc,.docx" id="resumeFile">
+                                <label for="resumeFile" class="file-label">
+                                    <i class="bi bi-cloud-upload"></i> Выберите файл
+                                </label>
+                                <span class="file-name" id="fileName">Файл не выбран</span>
+                            </div>
+                            <small>Поддерживаемые форматы: PDF, DOC, DOCX. Максимальный размер: 5 МБ</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="consent" required>
+                        <label for="consent">Я даю согласие на обработку персональных данных <span class="required">*</span></label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Отправить заявку</button>
+                </form>
+                
+                <div class="success-message" id="successMessage" style="display: none;">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <h3>Заявка отправлена!</h3>
+                    <p>Спасибо за интерес к нашей компании. Наш HR-специалист свяжется с вами в ближайшее время.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.getElementById('jobForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Здесь будет отправка на сервер (позже)
+        // Пока просто показываем сообщение об успехе
+        
+        document.getElementById('jobForm').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+        
+        // Прокрутка к сообщению
+        document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    
+    // Заполнение select при клике на кнопку вакансии
+    document.querySelectorAll('.vacancy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const position = this.getAttribute('data-position');
+            const select = document.getElementById('positionSelect');
+            select.value = position;
+            
+            // Прокрутка к форме
+            document.getElementById('application').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+    
+    // Отображение имени выбранного файла
+    document.getElementById('resumeFile').addEventListener('change', function(e) {
+        const fileName = e.target.files[0]?.name || 'Файл не выбран';
+        document.getElementById('fileName').textContent = fileName;
+    });
+</script>
+{% endblock %}

@@ -2,12 +2,12 @@
     <div class="container-header">
         <a href="{{ url_for('main.index') }}" class="header-logo" id="logo">🏗️ МОЙ <span class="orange">ДОМ ДВ</span></a>
         <div class="header-nav">
-            <a href="#">О компании</a>
-            <a href="#">Портфолио</a>
-            <a href="#">Услуги</a>
-            <a href="#">Работа</a>
-            <a href="#">Контакты</a>
-            <a href="#">Блог</a>
+            <a href="{{ url_for('main.about') }}">О компании</a>
+            <a href="{{ url_for('main.portfolio') }}">Портфолио</a>
+            <a href="{{ url_for('main.services') }}">Услуги</a>
+            <a href="{{ url_for('main.jobs') }}">Работа</a>
+            <a href="{{ url_for('main.contacts') }}">Контакты</a>
+            <a href="{{ url_for('main.blog') }}">Блог</a>
         </div>
         
         {% if current_user.is_authenticated %}
