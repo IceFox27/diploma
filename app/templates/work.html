@@ -9,7 +9,6 @@
 </head>
 <body>
 <div class="work-dashboard">
-    <!-- Левая боковая панель -->
     <div class="work-sidebar">
         <div class="sidebar-logo">
             <a href="{{ url_for('main.index') }}" class="sidebar-logo-link">
@@ -58,9 +57,7 @@
         </div>
     </div>
     
-    <!-- Правая область с контентом -->
     <div class="work-content">
-        <!-- Страница: Профиль -->
         <div class="content-page" id="page-profile">
             <div class="content-header">
                 <h1>Мой профиль</h1>
@@ -103,7 +100,6 @@
             </div>
         </div>
         
-        <!-- Страница: Сотрудники (только для директора) -->
         <div class="content-page" id="page-employees" style="display: none;">
             <div class="content-header">
                 <h1>Сотрудники</h1>
@@ -112,16 +108,16 @@
             
             <div class="employees-stats">
                 <div class="stat-card-small">
-                    <div class="stat-number">24</div>
+                    <div class="stat-number">{{ employees|length }}</div>
                     <div class="stat-label">Всего сотрудников</div>
                 </div>
                 <div class="stat-card-small">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Руководители</div>
+                    <div class="stat-number">{{ managers_count }}</div>
+                    <div class="stat-label">Менеджеров</div>
                 </div>
                 <div class="stat-card-small">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">В работе</div>
+                    <div class="stat-number">{{ active_count }}</div>
+                    <div class="stat-label">Активны сейчас</div>
                 </div>
             </div>
             
@@ -131,63 +127,49 @@
                         <tr>
                             <th>Сотрудник</th>
                             <th>Должность</th>
-                            <th>Контакты</th>
-                            <th>Проектов</th>
-                            <th></th>
+                            <th>Телефон</th>
+                            <th>Статус</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for emp in employees %}
+                        {% set is_active = emp.last_seen and (now - emp.last_seen).total_seconds() < 300 %}
                         <tr>
                             <td>
                                 <div class="employee-cell">
-                                    <div class="employee-avatar-small">АК</div>
+                                    {% if emp.avatar %}
+                                        <img src="{{ url_for('static', filename='upload/' + emp.avatar) }}" class="employee-avatar-img">
+                                    {% else %}
+                                        <div class="employee-avatar-small">{{ emp.first_name[0] if emp.first_name else '' }}{{ emp.last_name[0] if emp.last_name else '' }}</div>
+                                    {% endif %}
                                     <div class="employee-info">
-                                        <strong>Алексей Ковалёв</strong>
-                                        <span>aleksey@moydomdv.ru</span>
+                                        <strong>{{ emp.last_name or '' }} {{ emp.first_name or '' }} {{ emp.patronymic or '' }}</strong>
+                                        <span>{{ emp.email or '' }}</span>
                                     </div>
                                 </div>
                             </td>
-                            <td>Генеральный директор</td>
-                            <td>+7 (984) 555-58-88</td>
-                            <td>8</td>
-                            <td><button class="btn-icon">📧</button></td>
-                        </tr>
-                        <tr>
+                            <td>{{ emp.role.display_name if emp.role else 'Сотрудник' }}</td>
+                            <td>{{ emp.phone or '—' }}</td>
                             <td>
-                                <div class="employee-cell">
-                                    <div class="employee-avatar-small">МП</div>
-                                    <div class="employee-info">
-                                        <strong>Марина Петрова</strong>
-                                        <span>marina@moydomdv.ru</span>
-                                    </div>
-                                </div>
+                                {% if is_active %}
+                                    <span class="status-badge online">
+                                        <span class="status-dot"></span>
+                                        Онлайн
+                                    </span>
+                                {% else %}
+                                    <span class="status-badge offline">
+                                        <span class="status-dot"></span>
+                                        Офлайн
+                                    </span>
+                                {% endif %}
                             </td>
-                            <td>Главный архитектор</td>
-                            <td>+7 (984) 555-58-89</td>
-                            <td>12</td>
-                            <td><button class="btn-icon">📧</button></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="employee-cell">
-                                    <div class="employee-avatar-small">ДС</div>
-                                    <div class="employee-info">
-                                        <strong>Дмитрий Соколов</strong>
-                                        <span>dmitry@moydomdv.ru</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Руководитель строительства</td>
-                            <td>+7 (984) 555-58-90</td>
-                            <td>6</td>
-                            <td><button class="btn-icon">📧</button></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
         
-        <!-- Страница: Аналитика (только для директора) -->
         <div class="content-page" id="page-analytics" style="display: none;">
             <div class="content-header">
                 <h1>Аналитика</h1>
