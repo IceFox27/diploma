@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from functools import wraps
 
@@ -45,8 +45,11 @@ def register():
         try:
             db.session.add(employee)
             db.session.commit()
+            flash(f"{form.login.data} успешно зарегистрирован", "success")
+            return redirect(url_for('work.index'))
         except Exception as e:
             print(str(e))
+            flash(f"При регистрации сотрудника произошла ошибка", "danger")
             db.session.rollback()
     
     return render_template('employee/register.html', form=form)

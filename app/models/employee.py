@@ -15,7 +15,7 @@ class Employee(db.Model, UserMixin):
     password = db.Column(db.String(200))
     phone = db.Column(db.String(20), unique=True)
     email = db.Column(db.String(100), unique=True)
-    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime, default=None)  
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='SET NULL'), nullable=True)
     avatar = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

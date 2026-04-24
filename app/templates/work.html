@@ -37,16 +37,6 @@
                 <i class="bi bi-folder2-open"></i>
                 <span>Проекты</span>
             </a>
-            
-            <a href="#" class="nav-item" data-page="tasks">
-                <i class="bi bi-check2-square"></i>
-                <span>Задачи</span>
-            </a>
-            
-            <a href="#" class="nav-item" data-page="calendar">
-                <i class="bi bi-calendar3"></i>
-                <span>Календарь</span>
-            </a>
         </nav>
         
         <div class="sidebar-footer">
@@ -60,8 +50,10 @@
     <div class="work-content">
         <div class="content-page" id="page-profile">
             <div class="content-header">
-                <h1>Мой профиль</h1>
-                <p>Личная информация и настройки</p>
+                <div class="content-header-left">
+                    <h1>Мой профиль</h1>
+                    <p>Личная информация и настройки</p>
+                </div>
             </div>
             
             <div class="profile-card-dashboard">
@@ -102,8 +94,16 @@
         
         <div class="content-page" id="page-employees" style="display: none;">
             <div class="content-header">
-                <h1>Сотрудники</h1>
-                <p>Управление персоналом компании</p>
+                <div class="content-header-left">
+                    <h1>Сотрудники</h1>
+                    <p>Управление персоналом компании</p>
+                </div>
+                <div class="content-header-right">
+                    <a href="{{ url_for('employee.register') }}" class="btn-add-employee">
+                        <i class="bi bi-person-plus"></i>
+                        Добавить сотрудника
+                    </a>
+                </div>
             </div>
             
             <div class="employees-stats">
@@ -129,6 +129,7 @@
                             <th>Должность</th>
                             <th>Телефон</th>
                             <th>Статус</th>
+                            <th>Уволить</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -163,6 +164,15 @@
                                     </span>
                                 {% endif %}
                             </td>
+                            <td>
+                                {% if emp.role.name != 'director' %}
+                                    <button class="fire-employee-btn" data-employee-id="{{ emp.id }}" data-employee-name="{{ emp.first_name }} {{ emp.last_name }}">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                {% else %}
+                                    <span style="color: #64748b;">—</span>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -172,8 +182,10 @@
         
         <div class="content-page" id="page-analytics" style="display: none;">
             <div class="content-header">
-                <h1>Аналитика</h1>
-                <p>Ключевые показатели компании</p>
+                <div class="content-header-left">
+                    <h1>Аналитика</h1>
+                    <p>Ключевые показатели компании</p>
+                </div>
             </div>
             
             <div class="analytics-grid">
@@ -206,164 +218,117 @@
             </div>
         </div>
         
-        <!-- Страница: Проекты -->
         <div class="content-page" id="page-projects" style="display: none;">
             <div class="content-header">
-                <h1>Проекты</h1>
-                <p>Все проекты компании</p>
+                <div class="content-header-left">
+                    <h1>Проекты</h1>
+                    <p>Все проекты компании</p>
+                </div>
+                {% if current_user.role.name == 'director' %}
+                <div class="content-header-right">
+                    <a href="{{ url_for('project.create') }}" class="btn-add-employee">
+                        <i class="bi bi-plus-lg"></i>
+                        Создать проект
+                    </a>
+                </div>
+                {% endif %}
             </div>
             
             <div class="projects-filters">
-                <button class="filter-chip active">Все проекты</button>
-                <button class="filter-chip">Активные</button>
-                <button class="filter-chip">Завершённые</button>
-                <button class="filter-chip">Планирование</button>
+                <button class="filter-chip active" data-filter="all">Все проекты</button>
+                <button class="filter-chip" data-filter="active">Активные</button>
+                <button class="filter-chip" data-filter="completed">Завершённые</button>
+                <button class="filter-chip" data-filter="planning">Планирование</button>
             </div>
             
             <div class="projects-grid-dashboard">
-                <div class="project-card-dashboard">
-                    <div class="project-header">
-                        <h3>Коттедж «Берёзки»</h3>
-                        <span class="priority-badge priority-high">🔴 Высокий</span>
-                    </div>
-                    <p class="project-address">📍 Хабаровск, ул. Берёзовая, 15</p>
-                    <div class="project-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%"></div>
+                {% for project in projects %}
+                    <div class="project-card-dashboard" data-status="{{ project.status }}" data-project-id="{{ project.id }}">
+                        <div class="project-header">
+                            <h3>{{ project.name }}</h3>
+                            <span class="priority-badge priority-{{ project.priority }}">
+                                {% if project.priority == 'high' %}🔴 Высокий
+                                {% elif project.priority == 'medium' %}🟡 Средний
+                                {% else %}🟢 Низкий{% endif %}
+                            </span>
                         </div>
-                        <span class="progress-text">75%</span>
-                    </div>
-                    <div class="project-footer">
-                        <span class="project-status status-active">🔄 В работе</span>
-                        <span class="project-deadline">📅 до 30.06.2026</span>
-                    </div>
-                </div>
-                
-                <div class="project-card-dashboard">
-                    <div class="project-header">
-                        <h3>ЖК «Авангард»</h3>
-                        <span class="priority-badge priority-medium">🟡 Средний</span>
-                    </div>
-                    <p class="project-address">📍 Хабаровск, ул. Ленина, 50</p>
-                    <div class="project-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 45%"></div>
+                        <p class="project-address">📍 {{ project.address }}</p>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ project.progress_percent }}%"></div>
+                            </div>
+                            <span class="progress-text">{{ project.progress_percent }}%</span>
                         </div>
-                        <span class="progress-text">45%</span>
-                    </div>
-                    <div class="project-footer">
-                        <span class="project-status status-active">🔄 В работе</span>
-                        <span class="project-deadline">📅 до 15.08.2026</span>
-                    </div>
-                </div>
-                
-                <div class="project-card-dashboard">
-                    <div class="project-header">
-                        <h3>Лофт «Центральный»</h3>
-                        <span class="priority-badge priority-low">🟢 Низкий</span>
-                    </div>
-                    <p class="project-address">📍 Хабаровск, ул. Муравьёва-Амурского, 10</p>
-                    <div class="project-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 100%"></div>
+                        <div class="project-footer">
+                            <div class="project-info-left">
+                                <div class="project-manager">
+                                    👨‍💼 Менеджер: {{ project.manager.last_name if project.manager else 'Не назначен' }}
+                                </div>
+                                <div class="project-status status-{{ project.status }}">
+                                    {% if project.status == 'planning' %}📋 Планирование
+                                    {% elif project.status == 'active' %}🔄 В работе
+                                    {% elif project.status == 'completed' %}✅ Завершён
+                                    {% else %}⏸️ Приостановлен{% endif %}
+                                </div>
+                                <div class="project-deadline">
+                                    📅 {{ project.end_date.strftime('%d.%m.%Y') if project.end_date else '—' }}
+                                </div>
+                            </div>
+                            <div class="project-actions-right">
+                                {% if current_user.role.name == 'director' %}
+                                    <button class="delete-project-btn" data-project-id="{{ project.id }}" data-project-name="{{ project.name }}">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                {% endif %}
+                            </div>
                         </div>
-                        <span class="progress-text">100%</span>
                     </div>
-                    <div class="project-footer">
-                        <span class="project-status status-completed">✅ Завершён</span>
-                        <span class="project-deadline">📅 сдано 10.04.2026</span>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-        
-        <!-- Страница: Задачи -->
-        <div class="content-page" id="page-tasks" style="display: none;">
-            <div class="content-header">
-                <h1>Задачи</h1>
-                <p>Текущие задачи и поручения</p>
-            </div>
-            
-            <div class="tasks-list-dashboard">
-                <div class="task-item-dashboard">
-                    <div class="task-check">
-                        <input type="checkbox">
-                    </div>
-                    <div class="task-info">
-                        <h4>Подготовить смету по проекту «Берёзки»</h4>
-                        <p>Проект: Коттедж «Берёзки»</p>
-                    </div>
-                    <div class="task-deadline">
-                        <span class="deadline-date overdue">📅 до 20.05.2026 (просрочена)</span>
-                    </div>
-                </div>
-                
-                <div class="task-item-dashboard">
-                    <div class="task-check">
-                        <input type="checkbox">
-                    </div>
-                    <div class="task-info">
-                        <h4>Согласовать дизайн-проект с заказчиком</h4>
-                        <p>Проект: ЖК «Авангард»</p>
-                    </div>
-                    <div class="task-deadline">
-                        <span class="deadline-date">📅 до 25.05.2026</span>
-                    </div>
-                </div>
-                
-                <div class="task-item-dashboard">
-                    <div class="task-check">
-                        <input type="checkbox" checked>
-                    </div>
-                    <div class="task-info">
-                        <h4>Проверить исполнительную документацию</h4>
-                        <p>Проект: Лофт «Центральный»</p>
-                    </div>
-                    <div class="task-deadline">
-                        <span class="deadline-date completed">✅ Выполнено 15.04.2026</span>
-                    </div>
-                </div>
+    </div>
+</div>
+
+<!-- Модальное окно подтверждения увольнения -->
+<div id="fireModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Увольнение сотрудника</h3>
+            <span class="modal-close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p>Вы действительно хотите уволить <strong id="employeeName"></strong>?</p>
+            <p class="warning-text">Это действие необратимо!</p>
+            <div class="confirm-input">
+                <label>Введите слово "уволить" для подтверждения:</label>
+                <input type="text" id="confirmText" placeholder="уволить">
             </div>
         </div>
-        
-        <!-- Страница: Календарь -->
-        <div class="content-page" id="page-calendar" style="display: none;">
-            <div class="content-header">
-                <h1>Календарь</h1>
-                <p>План работ и событий</p>
+        <div class="modal-footer">
+            <button class="btn-cancel">Отмена</button>
+            <button class="btn-confirm-fire" disabled>Уволить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно подтверждения удаления проекта -->
+<div id="deleteProjectModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Удаление проекта</h3>
+            <span class="modal-close-project">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p>Вы действительно хотите удалить проект <strong id="projectName"></strong>?</p>
+            <p class="warning-text">Это действие необратимо! Все данные по проекту будут удалены.</p>
+            <div class="confirm-input">
+                <label>Введите слово "удалить" для подтверждения:</label>
+                <input type="text" id="confirmDeleteText" placeholder="удалить">
             </div>
-            
-            <div class="calendar-placeholder">
-                <div class="calendar-header">
-                    <button class="calendar-nav">←</button>
-                    <h3>Май 2026</h3>
-                    <button class="calendar-nav">→</button>
-                </div>
-                <div class="calendar-weekdays">
-                    <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
-                </div>
-                <div class="calendar-days">
-                    <span class="day other">28</span><span class="day other">29</span><span class="day other">30</span>
-                    <span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span>
-                    <span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span>
-                    <span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span>
-                    <span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span>
-                    <span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span>
-                    <span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span>
-                    <span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span>
-                    <span class="day">29</span><span class="day">30</span><span class="day">31</span><span class="day other">1</span>
-                </div>
-                <div class="calendar-events">
-                    <div class="event-item">
-                        <span class="event-dot orange"></span>
-                        <span class="event-text">Сдача проекта «Берёзки» — 30 мая</span>
-                    </div>
-                    <div class="event-item">
-                        <span class="event-dot blue"></span>
-                        <span class="event-text">Совещание по проекту «Авангард» — 25 мая</span>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel-project">Отмена</button>
+            <button class="btn-confirm-delete" disabled>Удалить</button>
         </div>
     </div>
 </div>
@@ -382,6 +347,171 @@
             });
             document.getElementById(`page-${pageId}`).style.display = 'block';
         });
+    });
+
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const projectCards = document.querySelectorAll('.project-card-dashboard');
+
+    filterChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            filterChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filterValue = this.getAttribute('data-filter');
+            
+            projectCards.forEach(card => {
+                const status = card.getAttribute('data-status');
+                
+                if (filterValue === 'all' || status === filterValue) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    let currentEmployeeId = null;
+    
+    const modal = document.getElementById('fireModal');
+    const closeBtn = document.querySelector('.modal-close');
+    const cancelBtn = document.querySelector('.btn-cancel');
+    const confirmFireBtn = document.querySelector('.btn-confirm-fire');
+    const confirmTextInput = document.getElementById('confirmText');
+    const employeeNameSpan = document.getElementById('employeeName');
+
+    function openModal(employeeId, employeeName) {
+        currentEmployeeId = employeeId;
+        employeeNameSpan.textContent = employeeName;
+        confirmTextInput.value = '';
+        confirmFireBtn.disabled = true;
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        currentEmployeeId = null;
+    }
+
+    function fireEmployee() {
+        if (confirmTextInput.value.toLowerCase() !== 'уволить') {
+            alert('Введите слово "уволить" для подтверждения');
+            return;
+        }
+        
+        fetch(`/work/employee/${currentEmployeeId}/fire`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Ошибка: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('Произошла ошибка: ' + error);
+        });
+    }
+
+    document.querySelectorAll('.fire-employee-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const employeeId = this.getAttribute('data-employee-id');
+            const employeeName = this.getAttribute('data-employee-name');
+            openModal(employeeId, employeeName);
+        });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    if (confirmFireBtn) confirmFireBtn.addEventListener('click', fireEmployee);
+    
+    if (confirmTextInput) {
+        confirmTextInput.addEventListener('input', function() {
+            confirmFireBtn.disabled = this.value.toLowerCase() !== 'уволить';
+        });
+    }
+
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    let currentProjectId = null;
+
+    const deleteProjectModal = document.getElementById('deleteProjectModal');
+    const closeProjectBtn = document.querySelector('.modal-close-project');
+    const cancelProjectBtn = document.querySelector('.btn-cancel-project');
+    const confirmDeleteBtn = document.querySelector('.btn-confirm-delete');
+    const confirmDeleteInput = document.getElementById('confirmDeleteText');
+    const projectNameSpan = document.getElementById('projectName');
+
+    function openDeleteModal(projectId, projectName) {
+        currentProjectId = projectId;
+        projectNameSpan.textContent = projectName;
+        confirmDeleteInput.value = '';
+        confirmDeleteBtn.disabled = true;
+        deleteProjectModal.style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+        deleteProjectModal.style.display = 'none';
+        currentProjectId = null;
+    }
+
+    function deleteProject() {
+        if (confirmDeleteInput.value.toLowerCase() !== 'удалить') {
+            alert('Введите слово "удалить" для подтверждения');
+            return;
+        }
+        
+        fetch(`/work/project/${currentProjectId}/delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Ошибка: ' + data.error);
+            }
+        })
+        .catch(error => {
+            alert('Произошла ошибка: ' + error);
+        });
+    }
+
+    document.querySelectorAll('.delete-project-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const projectId = this.getAttribute('data-project-id');
+            const projectName = this.getAttribute('data-project-name');
+            openDeleteModal(projectId, projectName);
+        });
+    });
+
+    if (closeProjectBtn) closeProjectBtn.addEventListener('click', closeDeleteModal);
+    if (cancelProjectBtn) cancelProjectBtn.addEventListener('click', closeDeleteModal);
+    if (confirmDeleteBtn) confirmDeleteBtn.addEventListener('click', deleteProject);
+
+    if (confirmDeleteInput) {
+        confirmDeleteInput.addEventListener('input', function() {
+            confirmDeleteBtn.disabled = this.value.toLowerCase() !== 'удалить';
+        });
+    }
+
+    window.addEventListener('click', function(event) {
+        if (event.target === deleteProjectModal) {
+            closeDeleteModal();
+        }
     });
 </script>
 </body>
