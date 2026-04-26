@@ -8,6 +8,13 @@ from .routes.employee import employee
 from .routes.project import project_bp
 from .routes.work import work_bp  
 
+# ЯВНО ИМПОРТИРУЙТЕ ВСЕ МОДЕЛИ, ЧТОБЫ ALEMBIC ИХ УВИДЕЛ
+from .models.employee import Employee
+from .models.role import Role
+from .models.salary import Salary
+from .models.project import Project
+from .models.task import Task  # <--- ДОБАВЬТЕ ЭТУ СТРОКУ
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -24,8 +31,5 @@ def create_app(config_class=Config):
     login_manager.login_view = 'employee.login'
     login_manager.login_message = 'Вы не можете получить доступ к данной странице. Вам необходимо войти.'
     login_manager.login_message_category = 'info'
-
-    with app.app_context():
-        db.create_all() 
 
     return app

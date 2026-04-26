@@ -4,6 +4,8 @@ from ..models.project import Project
 from ..models.employee import Employee
 from ..models.role import Role
 from ..extensions import db
+from ..models.task import Task
+from datetime import datetime
 
 project_bp = Blueprint('project', __name__, url_prefix='/projects')
 
@@ -60,12 +62,13 @@ def create():
         db.session.rollback()
         flash(f'Ошибка: {str(e)}', 'danger')
         return render_template('projects/create_project.html', managers=managers)
-    
+
 @project_bp.route('/<int:project_id>')
 @login_required
 def view(project_id):
     project = Project.query.get_or_404(project_id)
     
+    # Проверка доступа
     if current_user.role.name == 'director':
         pass
     elif current_user.role.name == 'manager':
@@ -77,7 +80,22 @@ def view(project_id):
             flash('У вас нет доступа к этому проекту', 'danger')
             return redirect(url_for('work.index'))
     
-    return render_template('projects/project_detail.html', project=project)
+    # Получаем задачи проекта
+    tasks = Task.query.filter_by(project_id=project_id).order_by(Task.created_at.desc()).all()
+    
+    # Подсчёт статистики по задачам
+    tasks_total = len(tasks)
+    tasks_completed = Task.query.filter_by(project_id=project_id, status='completed').count()
+    tasks_in_progress = Task.query.filter_by(project_id=project_id, status='in_progress').count()
+    tasks_pending = Task.query.filter_by(project_id=project_id, status='pending').count()
+    
+    return render_template('projects/project_detail.html', 
+                         project=project, 
+                         tasks=tasks,
+                         tasks_total=tasks_total,
+                         tasks_completed=tasks_completed,
+                         tasks_in_progress=tasks_in_progress,
+                         tasks_pending=tasks_pending)
 
 
 @project_bp.route('/<int:project_id>/edit', methods=['GET', 'POST'])
@@ -154,3 +172,138 @@ def assign_workers(project_id):
         db.session.rollback()
         flash(f'Ошибка: {str(e)}', 'danger')
         return redirect(url_for('project.assign_workers', project_id=project_id))
+    
+@project_bp.route('/<int:project_id>/task/create', methods=['GET', 'POST'])
+@login_required
+def create_task(project_id):
+    project = Project.query.get_or_404(project_id)
+    
+    # Проверка прав: менеджер проекта или директор
+    if current_user.role.name != 'director' and project.manager_id != current_user.id:
+        flash('Только менеджер проекта или директор могут создавать задачи', 'danger')
+        return redirect(url_for('project.view', project_id=project_id))
+    
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+        priority = request.form.get('priority', 'medium')
+        deadline = request.form.get('deadline') or None
+        assignee_id = request.form.get('assignee_id') or None
+        
+        if not title:
+            flash('Название задачи обязательно', 'danger')
+            return redirect(url_for('project.create_task', project_id=project_id))
+        
+        task = Task(
+            title=title,
+            description=description,
+            priority=priority,
+            deadline=deadline,
+            project_id=project_id,
+            assigner_id=current_user.id,
+            assignee_id=int(assignee_id) if assignee_id else None
+        )
+        
+        try:
+            db.session.add(task)
+            db.session.commit()
+            flash('Задача успешно создана', 'success')
+            return redirect(url_for('project.view', project_id=project_id))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Ошибка: {str(e)}', 'danger')
+    
+    # GET запрос — показываем форму
+    workers = project.workers.all()
+    return render_template('projects/create_task.html', project=project, workers=workers)
+
+
+@project_bp.route('/task/<int:task_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    project = task.project
+    
+    # Проверка прав
+    if current_user.role.name != 'director' and project.manager_id != current_user.id and task.assignee_id != current_user.id:
+        flash('У вас нет прав для редактирования этой задачи', 'danger')
+        return redirect(url_for('project.view', project_id=project.id))
+    
+    if request.method == 'POST':
+        task.title = request.form.get('title')
+        task.description = request.form.get('description')
+        task.priority = request.form.get('priority', 'medium')
+        task.status = request.form.get('status', 'pending')
+        task.deadline = request.form.get('deadline') or None
+        assignee_id = request.form.get('assignee_id')
+        task.assignee_id = int(assignee_id) if assignee_id else None
+        
+        if task.status == 'completed' and not task.completed_at:
+            task.completed_at = datetime.utcnow()
+        
+        try:
+            db.session.commit()
+            flash('Задача обновлена', 'success')
+            return redirect(url_for('project.view', project_id=project.id))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Ошибка: {str(e)}', 'danger')
+    
+    workers = project.workers.all()
+    return render_template('projects/edit_task.html', task=task, project=project, workers=workers)
+
+
+@project_bp.route('/task/<int:task_id>/delete', methods=['POST'])
+@login_required
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    project_id = task.project_id
+    
+    if current_user.role.name != 'director' and task.project.manager_id != current_user.id:
+        flash('У вас нет прав для удаления этой задачи', 'danger')
+        return redirect(url_for('project.view', project_id=project_id))
+    
+    try:
+        db.session.delete(task)
+        db.session.commit()
+        flash('Задача удалена', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Ошибка: {str(e)}', 'danger')
+    
+    return redirect(url_for('project.view', project_id=project_id))
+
+
+@project_bp.route('/task/<int:task_id>/status/<status>')
+@login_required
+def change_task_status(task_id, status):
+    task = Task.query.get_or_404(task_id)
+    
+    # Проверка прав: директор, менеджер проекта или исполнитель задачи
+    if current_user.role.name != 'director' and task.project.manager_id != current_user.id and task.assignee_id != current_user.id:
+        flash('У вас нет прав', 'danger')
+        return redirect(url_for('project.view', project_id=task.project_id))
+    
+    if status not in ['pending', 'in_progress', 'completed', 'cancelled']:
+        flash('Неверный статус', 'danger')
+        return redirect(url_for('project.view', project_id=task.project_id))
+    
+    task.status = status
+    
+    if status == 'completed':
+        task.completed_at = datetime.utcnow()
+    
+    try:
+        db.session.commit()
+        
+        # Отправляем сообщение в зависимости от роли
+        if task.assignee_id == current_user.id:
+            flash('Статус задачи обновлён', 'success')
+        else:
+            flash('Статус задачи обновлён', 'success')
+            
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Ошибка: {str(e)}', 'danger')
+    
+    return redirect(url_for('project.view', project_id=task.project_id))

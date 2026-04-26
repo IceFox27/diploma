@@ -178,25 +178,120 @@
                 </div>
                 
                 <div class="tab-content" id="tab-tasks">
-                    <div class="tasks-placeholder">
-                        <div class="placeholder-icon">
-                            <i class="bi bi-check2-square"></i>
-                        </div>
-                        <h3>Задачи проекта</h3>
-                        <p>Здесь будет список задач по проекту</p>
-                        <div class="task-list-demo">
-                            <div class="demo-task">
-                                <div class="demo-checkbox"></div>
-                                <div class="demo-text">Пример задачи</div>
-                                <div class="demo-date">—</div>
+                    <div class="tasks-header">
+                        <div class="tasks-stats">
+                            <div class="stat-card-small">
+                                <div class="stat-number">{{ tasks_total|default(0) }}</div>
+                                <div class="stat-label">Всего задач</div>
                             </div>
-                            <div class="demo-task">
-                                <div class="demo-checkbox"></div>
-                                <div class="demo-text">Ещё одна задача</div>
-                                <div class="demo-date">—</div>
+                            <div class="stat-card-small">
+                                <div class="stat-number">{{ tasks_completed|default(0) }}</div>
+                                <div class="stat-label">Выполнено</div>
+                            </div>
+                            <div class="stat-card-small">
+                                <div class="stat-number">{{ tasks_in_progress|default(0) }}</div>
+                                <div class="stat-label">В работе</div>
+                            </div>
+                            <div class="stat-card-small">
+                                <div class="stat-number">{{ tasks_pending|default(0) }}</div>
+                                <div class="stat-label">Ожидают</div>
                             </div>
                         </div>
-                        <p class="placeholder-note">Функционал задач в разработке</p>
+                        
+                        {% if current_user.role.name == 'director' or current_user.id == project.manager_id %}
+                        <div class="add-task-btn-wrapper">
+                            <a href="{{ url_for('project.create_task', project_id=project.id) }}" class="btn-add-task">
+                                <i class="bi bi-plus-lg"></i> Добавить задачу
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="tasks-list">
+                        {% if tasks %}
+                            {% for task in tasks %}
+                            <div class="task-card" data-task-id="{{ task.id }}">
+                                <div class="task-main">
+                                    <div class="task-status-actions">
+                                        {% if current_user.role.name == 'director' or current_user.id == project.manager_id or task.assignee_id == current_user.id %}
+                                            <div class="dropdown">
+                                                <button class="status-badge-task status-{{ task.status }}">
+                                                    {% if task.status == 'pending' %}⏳ Ожидает
+                                                    {% elif task.status == 'in_progress' %}🔄 В работе
+                                                    {% elif task.status == 'completed' %}✅ Выполнена
+                                                    {% else %}❌ Отменена{% endif %}
+                                                    <i class="bi bi-chevron-down"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    {% if task.status != 'pending' %}
+                                                        <a href="{{ url_for('project.change_task_status', task_id=task.id, status='pending') }}">⏳ Ожидает</a>
+                                                    {% endif %}
+                                                    {% if task.status != 'in_progress' %}
+                                                        <a href="{{ url_for('project.change_task_status', task_id=task.id, status='in_progress') }}">🔄 В работе</a>
+                                                    {% endif %}
+                                                    {% if task.status != 'completed' %}
+                                                        <a href="{{ url_for('project.change_task_status', task_id=task.id, status='completed') }}">✅ Выполнена</a>
+                                                    {% endif %}
+                                                    {% if task.status != 'cancelled' and (current_user.role.name == 'director' or current_user.id == project.manager_id) %}
+                                                        <a href="{{ url_for('project.change_task_status', task_id=task.id, status='cancelled') }}">❌ Отменена</a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <span class="status-badge-task status-{{ task.status }}">
+                                                {% if task.status == 'pending' %}⏳ Ожидает
+                                                {% elif task.status == 'in_progress' %}🔄 В работе
+                                                {% elif task.status == 'completed' %}✅ Выполнена
+                                                {% else %}❌ Отменена{% endif %}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="task-info">
+                                        <h4>{{ task.title }}</h4>
+                                        <p>{{ task.description or 'Нет описания' }}</p>
+                                        <div class="task-meta">
+                                            <span class="priority-{{ task.priority }}">
+                                                {% if task.priority == 'high' %}🔴 Высокий приоритет
+                                                {% elif task.priority == 'medium' %}🟡 Средний приоритет
+                                                {% else %}🟢 Низкий приоритет{% endif %}
+                                            </span>
+                                            <span>👤 Исполнитель: {{ task.assignee.last_name if task.assignee else 'Не назначен' }}</span>
+                                            <span>📅 Срок: {{ task.deadline.strftime('%d.%m.%Y') if task.deadline else '—' }}</span>
+                                            {% if task.is_overdue %}
+                                                <span class="overdue-warning">⚠️ Просрочена!</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="task-actions">
+                                        {% if task.assignee_id == current_user.id and task.status != 'completed' %}
+                                            <a href="{{ url_for('project.change_task_status', task_id=task.id, status='completed') }}" class="btn-complete" title="Завершить задачу">
+                                                <i class="bi bi-check2-circle"></i> Завершить
+                                            </a>
+                                        {% endif %}
+                                        {% if current_user.role.name == 'director' or current_user.id == project.manager_id %}
+                                            <a href="{{ url_for('project.edit_task', task_id=task.id) }}" class="btn-icon" title="Редактировать">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <form method="POST" action="{{ url_for('project.delete_task', task_id=task.id) }}" style="display:inline;" onsubmit="return confirm('Удалить задачу?')">
+                                                <button type="submit" class="btn-icon delete" title="Удалить">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-tasks">
+                                <i class="bi bi-check2-square"></i>
+                                <h3>Нет задач</h3>
+                                <p>В этом проекте пока нет задач</p>
+                                {% if current_user.role.name == 'director' or current_user.id == project.manager_id %}
+                                <a href="{{ url_for('project.create_task', project_id=project.id) }}" class="btn-add-task">Создать первую задачу</a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
