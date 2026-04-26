@@ -11,11 +11,15 @@ class Task(db.Model):
     priority = db.Column(db.String(10), default='medium')
     
     project_id = db.Column(db.Integer, db.ForeignKey('project.id', ondelete='CASCADE'), nullable=False)
-    assigner_id = db.Column(db.Integer, db.ForeignKey('employee.id', ondelete='SET NULL'))  # Кто назначил (менеджер)
-    assignee_id = db.Column(db.Integer, db.ForeignKey('employee.id', ondelete='SET NULL'))  # Исполнитель
+    assigner_id = db.Column(db.Integer, db.ForeignKey('employee.id', ondelete='SET NULL'))
+    assignee_id = db.Column(db.Integer, db.ForeignKey('employee.id', ondelete='SET NULL'))
     
     deadline = db.Column(db.Date)
     completed_at = db.Column(db.DateTime)
+    
+    # Новые поля для отчёта
+    report_text = db.Column(db.Text)
+    report_files = db.Column(db.Text)  # JSON строка с путями к файлам
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -45,3 +49,7 @@ class Task(db.Model):
     @property
     def is_pending(self):
         return self.status == 'pending'
+    
+    @property
+    def has_report(self):
+        return self.report_text or self.report_files

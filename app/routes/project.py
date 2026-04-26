@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from flask_login import login_required, current_user
 from ..models.project import Project
 from ..models.employee import Employee
@@ -6,6 +6,7 @@ from ..models.role import Role
 from ..extensions import db
 from ..models.task import Task
 from datetime import datetime
+from ..functions import save_task_files
 
 project_bp = Blueprint('project', __name__, url_prefix='/projects')
 
@@ -307,3 +308,65 @@ def change_task_status(task_id, status):
         flash(f'Ошибка: {str(e)}', 'danger')
     
     return redirect(url_for('project.view', project_id=task.project_id))
+
+@project_bp.route('/task/<int:task_id>/add-report', methods=['GET', 'POST'])
+@login_required
+def add_task_report(task_id):
+    task = Task.query.get_or_404(task_id)
+    
+    # Только исполнитель может добавлять отчёт
+    if task.assignee_id != current_user.id:
+        flash('Только исполнитель может добавлять отчёт к задаче', 'danger')
+        return redirect(url_for('project.view', project_id=task.project_id))
+    
+    if request.method == 'POST':
+        report_text = request.form.get('report_text')
+        files = request.files.getlist('report_files')
+        
+        # Сохраняем файлы
+        saved_files = None
+        if files and files[0].filename:
+            saved_files = save_task_files(files, task_id)
+
+        task.report_text = report_text
+        if saved_files:
+            task.report_files = saved_files
+        
+        # Если задача ещё не завершена и добавлен отчёт, можно предложить завершить
+        if task.status != 'completed':
+            task.status = 'in_progress'
+        
+        try:
+            db.session.commit()
+            flash('Отчёт добавлен успешно', 'success')
+            return redirect(url_for('project.view', project_id=task.project_id))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Ошибка: {str(e)}', 'danger')
+    
+    return render_template('projects/add_task_report.html', task=task)
+
+@project_bp.route('/task/<int:task_id>/report-data')
+@login_required
+def get_task_report_data(task_id):
+    task = Task.query.get_or_404(task_id)
+    
+    # Проверка доступа
+    if current_user.role.name != 'director' and task.project.manager_id != current_user.id and task.assignee_id != current_user.id:
+        return jsonify({'error': 'Нет доступа'}), 403
+    
+    import json
+    files = []
+    if task.report_files:
+        try:
+            files = json.loads(task.report_files)
+        except:
+            files = []
+    
+    return jsonify({
+        'title': task.title,
+        'report_text': task.report_text or 'Нет текстового отчёта',
+        'report_files': files,
+        'status': task.status,
+        'completed_at': task.completed_at.strftime('%d.%m.%Y %H:%M') if task.completed_at else None
+    })

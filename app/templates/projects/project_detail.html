@@ -260,13 +260,25 @@
                                             {% if task.is_overdue %}
                                                 <span class="overdue-warning">⚠️ Просрочена!</span>
                                             {% endif %}
+                                            {% if task.report_text or task.report_files %}
+                                                <span class="has-report-badge">📋 Есть отчёт</span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="task-actions">
-                                        {% if task.assignee_id == current_user.id and task.status != 'completed' %}
-                                            <a href="{{ url_for('project.change_task_status', task_id=task.id, status='completed') }}" class="btn-complete" title="Завершить задачу">
-                                                <i class="bi bi-check2-circle"></i> Завершить
-                                            </a>
+                                        {% if task.assignee_id == current_user.id %}
+                                            {% if task.status != 'completed' %}
+                                                <a href="{{ url_for('project.add_task_report', task_id=task.id) }}" class="btn-report" title="Добавить отчёт">
+                                                    <i class="bi bi-file-earmark-text"></i> Отчёт
+                                                </a>
+                                                <a href="{{ url_for('project.change_task_status', task_id=task.id, status='completed') }}" class="btn-complete" title="Завершить задачу">
+                                                    <i class="bi bi-check2-circle"></i> Завершить
+                                                </a>
+                                            {% elif task.has_report %}
+                                                <button onclick="showReportModal({{ task.id }})" class="btn-view-report" title="Посмотреть отчёт">
+                                                    <i class="bi bi-eye"></i> Посмотреть отчёт
+                                                </button>
+                                            {% endif %}
                                         {% endif %}
                                         {% if current_user.role.name == 'director' or current_user.id == project.manager_id %}
                                             <a href="{{ url_for('project.edit_task', task_id=task.id) }}" class="btn-icon" title="Редактировать">
@@ -299,6 +311,21 @@
     </div>
 </div>
 
+<!-- Модальное окно просмотра отчёта -->
+<div id="reportModal" class="modal">
+    <div class="modal-content modal-lg">
+        <div class="modal-header">
+            <h3>Отчёт по задаче</h3>
+            <span class="modal-close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="reportContent">
+                <!-- Сюда будет загружаться содержимое отчёта -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
         item.addEventListener('click', function(e) {
@@ -315,6 +342,71 @@
             
             document.getElementById(`tab-${tabId}`).classList.add('active');
         });
+    });
+    
+    // Просмотр отчёта
+    const reportModal = document.getElementById('reportModal');
+    const reportModalClose = document.querySelector('#reportModal .modal-close');
+    const reportContent = document.getElementById('reportContent');
+    
+    window.showReportModal = function(taskId) {
+        fetch(`/projects/task/${taskId}/report-data`)
+            .then(response => response.json())
+            .then(data => {
+                let filesHtml = '';
+                if (data.report_files && data.report_files.length > 0) {
+                    filesHtml = '<div class="report-files"><h4>Прикреплённые файлы:</h4><div class="files-grid">';
+                    data.report_files.forEach(file => {
+                        const ext = file.split('.').pop().toLowerCase();
+                        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
+                            filesHtml += `<div class="file-preview" onclick="window.open('${file}', '_blank')">
+                                            <img src="${file}" alt="Скриншот">
+                                            <span>${file.split('/').pop()}</span>
+                                          </div>`;
+                        } else if (['mp4', 'webm', 'mov'].includes(ext)) {
+                            filesHtml += `<div class="file-preview" onclick="window.open('${file}', '_blank')">
+                                            <video src="${file}"></video>
+                                            <span>${file.split('/').pop()}</span>
+                                          </div>`;
+                        } else {
+                            filesHtml += `<div class="file-preview" onclick="window.open('${file}', '_blank')">
+                                            <i class="bi bi-file-earmark"></i>
+                                            <span>${file.split('/').pop()}</span>
+                                          </div>`;
+                        }
+                    });
+                    filesHtml += '</div></div>';
+                }
+                
+                reportContent.innerHTML = `
+                    <div class="report-detail">
+                        <h4>Задача: ${data.title}</h4>
+                        <div class="report-text">
+                            <h4>Текст отчёта:</h4>
+                            <p>${data.report_text.replace(/\n/g, '<br>')}</p>
+                        </div>
+                        ${filesHtml}
+                        ${data.completed_at ? `<div class="report-completed">✅ Завершена: ${data.completed_at}</div>` : ''}
+                    </div>
+                `;
+                reportModal.style.display = 'flex';
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Не удалось загрузить отчёт');
+            });
+    };
+    
+    if (reportModalClose) {
+        reportModalClose.addEventListener('click', () => {
+            reportModal.style.display = 'none';
+        });
+    }
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === reportModal) {
+            reportModal.style.display = 'none';
+        }
     });
 </script>
 </body>

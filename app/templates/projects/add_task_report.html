@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить отчёт — {{ task.title }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_task_report.css') }}">
+</head>
+<body>
+<div class="add-report-page">
+    <div class="add-report-container">
+        <div class="add-report-card">
+            <div class="add-report-header">
+                <a href="{{ url_for('project.view', project_id=task.project_id) }}" class="back-btn">
+                    <i class="bi bi-arrow-left"></i> Назад к проекту
+                </a>
+                <h1>Добавить отчёт</h1>
+                <p>Задача: <strong>{{ task.title }}</strong></p>
+            </div>
+            
+            <form method="post" class="add-report-form" enctype="multipart/form-data">
+                <div class="form-group full-width">
+                    <label for="report_text">Текст отчёта</label>
+                    <textarea id="report_text" name="report_text" rows="6" placeholder="Опишите выполненную работу..."></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="report_files">Прикрепить файлы (скриншоты, видео, документы)</label>
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <i class="bi bi-cloud-upload"></i>
+                        <p>Перетащите файлы сюда или нажмите для выбора</p>
+                        <input type="file" id="report_files" name="report_files" multiple accept="image/*,video/*,.pdf,.doc,.docx">
+                        <span class="file-hint">Поддерживаются: JPG, PNG, GIF, MP4, PDF, DOC</span>
+                    </div>
+                    <div class="file-list" id="fileList"></div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">
+                        <i class="bi bi-send"></i> Отправить отчёт
+                    </button>
+                    <a href="{{ url_for('project.view', project_id=task.project_id) }}" class="btn-cancel">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const fileInput = document.getElementById('report_files');
+    const fileList = document.getElementById('fileList');
+    const uploadArea = document.getElementById('fileUploadArea');
+    
+    fileInput.addEventListener('change', function() {
+        fileList.innerHTML = '';
+        if (this.files.length > 0) {
+            Array.from(this.files).forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                const fileIcon = file.type.startsWith('image/') ? 'bi-image' : 
+                                 file.type.startsWith('video/') ? 'bi-film' : 'bi-file-earmark';
+                fileItem.innerHTML = `
+                    <i class="bi ${fileIcon}"></i>
+                    <span>${file.name}</span>
+                    <small>(${(file.size / 1024).toFixed(1)} KB)</small>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+    });
+    
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        fileInput.files = e.dataTransfer.files;
+        const changeEvent = new Event('change');
+        fileInput.dispatchEvent(changeEvent);
+    });
+    
+    uploadArea.addEventListener('click', function() {
+        fileInput.click();
+    });
+</script>
+</body>
+</html>
