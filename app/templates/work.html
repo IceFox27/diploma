@@ -244,44 +244,46 @@
             <div class="projects-grid-dashboard">
                 {% for project in projects %}
                     <div class="project-card-dashboard" data-status="{{ project.status }}" data-project-id="{{ project.id }}">
-                        <div class="project-header">
-                            <h3>{{ project.name }}</h3>
-                            <span class="priority-badge priority-{{ project.priority }}">
-                                {% if project.priority == 'high' %}🔴 Высокий
-                                {% elif project.priority == 'medium' %}🟡 Средний
-                                {% else %}🟢 Низкий{% endif %}
-                            </span>
-                        </div>
-                        <p class="project-address">📍 {{ project.address }}</p>
-                        <div class="project-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: {{ project.progress_percent }}%"></div>
+                        <a href="{{ url_for('project.view', project_id=project.id) }}" class="project-card-link">
+                            <div class="project-header">
+                                <h3>{{ project.name }}</h3>
+                                <span class="priority-badge priority-{{ project.priority }}">
+                                    {% if project.priority == 'high' %}🔴 Высокий
+                                    {% elif project.priority == 'medium' %}🟡 Средний
+                                    {% else %}🟢 Низкий{% endif %}
+                                </span>
                             </div>
-                            <span class="progress-text">{{ project.progress_percent }}%</span>
-                        </div>
-                        <div class="project-footer">
-                            <div class="project-info-left">
-                                <div class="project-manager">
-                                    👨‍💼 Менеджер: {{ project.manager.last_name if project.manager else 'Не назначен' }}
+                            <p class="project-address">📍 {{ project.address }}</p>
+                            <div class="project-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: {{ project.progress_percent }}%"></div>
                                 </div>
-                                <div class="project-status status-{{ project.status }}">
-                                    {% if project.status == 'planning' %}📋 Планирование
-                                    {% elif project.status == 'active' %}🔄 В работе
-                                    {% elif project.status == 'completed' %}✅ Завершён
-                                    {% else %}⏸️ Приостановлен{% endif %}
+                                <span class="progress-text">{{ project.progress_percent }}%</span>
+                            </div>
+                            <div class="project-footer">
+                                <div class="project-info-left">
+                                    <div class="project-manager">
+                                        👨‍💼 Менеджер: {{ project.manager.last_name if project.manager else 'Не назначен' }}
+                                    </div>
+                                    <div class="project-status status-{{ project.status }}">
+                                        {% if project.status == 'planning' %}📋 Планирование
+                                        {% elif project.status == 'active' %}🔄 В работе
+                                        {% elif project.status == 'completed' %}✅ Завершён
+                                        {% else %}⏸️ Приостановлен{% endif %}
+                                    </div>
+                                    <div class="project-deadline">
+                                        📅 {{ project.end_date.strftime('%d.%m.%Y') if project.end_date else '—' }}
+                                    </div>
                                 </div>
-                                <div class="project-deadline">
-                                    📅 {{ project.end_date.strftime('%d.%m.%Y') if project.end_date else '—' }}
+                                <div class="project-actions-right">
+                                    {% if current_user.role.name == 'director' %}
+                                        <button class="delete-project-btn" data-project-id="{{ project.id }}" data-project-name="{{ project.name }}" onclick="event.stopPropagation();">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="project-actions-right">
-                                {% if current_user.role.name == 'director' %}
-                                    <button class="delete-project-btn" data-project-id="{{ project.id }}" data-project-name="{{ project.name }}">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>
-                                {% endif %}
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 {% endfor %}
             </div>

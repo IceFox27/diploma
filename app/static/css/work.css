@@ -860,3 +860,25 @@ body {
 .status-hold {
     color: #f87171;
 }
+
+.project-card-link {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.project-card-dashboard {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.project-card-dashboard:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 102, 0, 0.4);
+}
+
+.delete-project-btn {
+    cursor: pointer;
+    z-index: 10;
+    position: relative;
+}
