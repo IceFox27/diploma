@@ -20,7 +20,6 @@ def save_picture(picture):
     return picture_fn
 
 def save_task_files(files, task_id):
-    """Сохраняет файлы отчёта по задаче"""
     saved_files = []
     
     if not files:
@@ -32,7 +31,7 @@ def save_task_files(files, task_id):
     for file in files:
         if file and file.filename:
             filename = secure_filename(file.filename)
-            # Добавляем timestamp к имени файла
+            
             name, ext = os.path.splitext(filename)
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
             new_filename = f"{name}_{timestamp}{ext}"

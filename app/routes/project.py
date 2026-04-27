@@ -1,23 +1,22 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify
 from flask_login import login_required, current_user
+from datetime import datetime
+from ..extensions import db
 from ..models.project import Project
 from ..models.employee import Employee
 from ..models.role import Role
-from ..extensions import db
 from ..models.task import Task
-from datetime import datetime
 from ..functions import save_task_files
 
 project_bp = Blueprint('project', __name__, url_prefix='/projects')
+
 
 @project_bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
     if current_user.role.name != 'director':
-        flash('Только директор может создавать проекты', 'danger')
         return redirect(url_for('work.index'))
     
-    # Получаем всех менеджеров из БД
     managers = Employee.query.join(Role).filter(Role.name == 'manager').all()
     
     if request.method == 'GET':
@@ -35,7 +34,6 @@ def create():
         manager_id = request.form.get('manager_id') or None
         
         if not name or not address or not start_date:
-            flash('Заполните обязательные поля', 'danger')
             return render_template('projects/create_project.html', managers=managers)
         
         project = Project(
@@ -56,35 +54,29 @@ def create():
         db.session.add(project)
         db.session.commit()
         
-        flash(f'Проект "{name}" успешно создан', 'success')
         return redirect(url_for('work.index'))
         
     except Exception as e:
         db.session.rollback()
-        flash(f'Ошибка: {str(e)}', 'danger')
         return render_template('projects/create_project.html', managers=managers)
+
 
 @project_bp.route('/<int:project_id>')
 @login_required
 def view(project_id):
     project = Project.query.get_or_404(project_id)
     
-    # Проверка доступа
     if current_user.role.name == 'director':
         pass
     elif current_user.role.name == 'manager':
         if project.manager_id != current_user.id and project.director_id != current_user.id:
-            flash('У вас нет доступа к этому проекту', 'danger')
             return redirect(url_for('work.index'))
     else:
         if not current_user.assigned_projects.filter(Project.id == project_id).first():
-            flash('У вас нет доступа к этому проекту', 'danger')
             return redirect(url_for('work.index'))
     
-    # Получаем задачи проекта
     tasks = Task.query.filter_by(project_id=project_id).order_by(Task.created_at.desc()).all()
     
-    # Подсчёт статистики по задачам
     tasks_total = len(tasks)
     tasks_completed = Task.query.filter_by(project_id=project_id, status='completed').count()
     tasks_in_progress = Task.query.filter_by(project_id=project_id, status='in_progress').count()
@@ -104,9 +96,7 @@ def view(project_id):
 def edit(project_id):
     project = Project.query.get_or_404(project_id)
     
-    # Проверка прав: директор или менеджер проекта
     if current_user.role.name != 'director' and project.manager_id != current_user.id:
-        flash('У вас нет прав для редактирования этого проекта', 'danger')
         return redirect(url_for('work.index'))
     
     if request.method == 'GET':
@@ -118,22 +108,27 @@ def edit(project_id):
         project.address = request.form.get('address')
         project.description = request.form.get('description')
         project.start_date = request.form.get('start_date')
+        
+        actual_start_date = request.form.get('actual_start_date')
+        project.actual_start_date = actual_start_date if actual_start_date else None
+        
         project.end_date = request.form.get('end_date') or None
         project.budget = float(request.form.get('budget', 0))
         project.priority = request.form.get('priority', 'medium')
         project.status = request.form.get('status', 'planning')
+        
+        progress = request.form.get('progress_percent')
+        project.progress_percent = int(progress) if progress else 0
         
         if current_user.role.name == 'director':
             manager_id = request.form.get('manager_id')
             project.manager_id = int(manager_id) if manager_id else None
         
         db.session.commit()
-        flash(f'Проект "{project.name}" успешно обновлён', 'success')
         return redirect(url_for('project.view', project_id=project.id))
         
     except Exception as e:
         db.session.rollback()
-        flash(f'Ошибка: {str(e)}', 'danger')
         managers = Employee.query.join(Role).filter(Role.name == 'manager').all()
         return render_template('projects/edit_project.html', project=project, managers=managers)
 
@@ -144,7 +139,6 @@ def assign_workers(project_id):
     project = Project.query.get_or_404(project_id)
     
     if current_user.role.name != 'director' and project.manager_id != current_user.id:
-        flash('Только менеджер проекта или директор могут назначать сотрудников', 'danger')
         return redirect(url_for('project.view', project_id=project_id))
     
     if request.method == 'GET':
@@ -166,22 +160,19 @@ def assign_workers(project_id):
                 project.workers.append(worker)
         
         db.session.commit()
-        flash('Состав рабочей группы обновлён', 'success')
         return redirect(url_for('project.view', project_id=project_id))
         
     except Exception as e:
         db.session.rollback()
-        flash(f'Ошибка: {str(e)}', 'danger')
         return redirect(url_for('project.assign_workers', project_id=project_id))
-    
+
+
 @project_bp.route('/<int:project_id>/task/create', methods=['GET', 'POST'])
 @login_required
 def create_task(project_id):
     project = Project.query.get_or_404(project_id)
     
-    # Проверка прав: менеджер проекта или директор
     if current_user.role.name != 'director' and project.manager_id != current_user.id:
-        flash('Только менеджер проекта или директор могут создавать задачи', 'danger')
         return redirect(url_for('project.view', project_id=project_id))
     
     if request.method == 'POST':
@@ -192,7 +183,6 @@ def create_task(project_id):
         assignee_id = request.form.get('assignee_id') or None
         
         if not title:
-            flash('Название задачи обязательно', 'danger')
             return redirect(url_for('project.create_task', project_id=project_id))
         
         task = Task(
@@ -208,13 +198,18 @@ def create_task(project_id):
         try:
             db.session.add(task)
             db.session.commit()
-            flash('Задача успешно создана', 'success')
+            
+            # Обновляем прогресс проекта
+            all_tasks = Task.query.filter_by(project_id=project_id).all()
+            if all_tasks:
+                completed = sum(1 for t in all_tasks if t.status == 'completed')
+                project.progress_percent = int(completed / len(all_tasks) * 100)
+                db.session.commit()
+            
             return redirect(url_for('project.view', project_id=project_id))
         except Exception as e:
             db.session.rollback()
-            flash(f'Ошибка: {str(e)}', 'danger')
     
-    # GET запрос — показываем форму
     workers = project.workers.all()
     return render_template('projects/create_task.html', project=project, workers=workers)
 
@@ -225,9 +220,7 @@ def edit_task(task_id):
     task = Task.query.get_or_404(task_id)
     project = task.project
     
-    # Проверка прав
     if current_user.role.name != 'director' and project.manager_id != current_user.id and task.assignee_id != current_user.id:
-        flash('У вас нет прав для редактирования этой задачи', 'danger')
         return redirect(url_for('project.view', project_id=project.id))
     
     if request.method == 'POST':
@@ -244,11 +237,17 @@ def edit_task(task_id):
         
         try:
             db.session.commit()
-            flash('Задача обновлена', 'success')
+            
+            # Обновляем прогресс проекта
+            all_tasks = Task.query.filter_by(project_id=project.id).all()
+            if all_tasks:
+                completed = sum(1 for t in all_tasks if t.status == 'completed')
+                project.progress_percent = int(completed / len(all_tasks) * 100)
+                db.session.commit()
+            
             return redirect(url_for('project.view', project_id=project.id))
         except Exception as e:
             db.session.rollback()
-            flash(f'Ошибка: {str(e)}', 'danger')
     
     workers = project.workers.all()
     return render_template('projects/edit_task.html', task=task, project=project, workers=workers)
@@ -259,18 +258,26 @@ def edit_task(task_id):
 def delete_task(task_id):
     task = Task.query.get_or_404(task_id)
     project_id = task.project_id
+    project = task.project
     
     if current_user.role.name != 'director' and task.project.manager_id != current_user.id:
-        flash('У вас нет прав для удаления этой задачи', 'danger')
         return redirect(url_for('project.view', project_id=project_id))
     
     try:
         db.session.delete(task)
         db.session.commit()
-        flash('Задача удалена', 'success')
+        
+        # Обновляем прогресс проекта после удаления задачи
+        all_tasks = Task.query.filter_by(project_id=project_id).all()
+        if all_tasks:
+            completed = sum(1 for t in all_tasks if t.status == 'completed')
+            project.progress_percent = int(completed / len(all_tasks) * 100)
+        else:
+            project.progress_percent = 0
+        db.session.commit()
+        
     except Exception as e:
         db.session.rollback()
-        flash(f'Ошибка: {str(e)}', 'danger')
     
     return redirect(url_for('project.view', project_id=project_id))
 
@@ -279,14 +286,12 @@ def delete_task(task_id):
 @login_required
 def change_task_status(task_id, status):
     task = Task.query.get_or_404(task_id)
+    project = task.project
     
-    # Проверка прав: директор, менеджер проекта или исполнитель задачи
     if current_user.role.name != 'director' and task.project.manager_id != current_user.id and task.assignee_id != current_user.id:
-        flash('У вас нет прав', 'danger')
         return redirect(url_for('project.view', project_id=task.project_id))
     
     if status not in ['pending', 'in_progress', 'completed', 'cancelled']:
-        flash('Неверный статус', 'danger')
         return redirect(url_for('project.view', project_id=task.project_id))
     
     task.status = status
@@ -297,33 +302,31 @@ def change_task_status(task_id, status):
     try:
         db.session.commit()
         
-        # Отправляем сообщение в зависимости от роли
-        if task.assignee_id == current_user.id:
-            flash('Статус задачи обновлён', 'success')
-        else:
-            flash('Статус задачи обновлён', 'success')
-            
+        # Обновляем прогресс проекта на основе выполненных задач
+        all_tasks = Task.query.filter_by(project_id=project.id).all()
+        if all_tasks:
+            completed = sum(1 for t in all_tasks if t.status == 'completed')
+            project.progress_percent = int(completed / len(all_tasks) * 100)
+            db.session.commit()
+        
     except Exception as e:
         db.session.rollback()
-        flash(f'Ошибка: {str(e)}', 'danger')
     
     return redirect(url_for('project.view', project_id=task.project_id))
+
 
 @project_bp.route('/task/<int:task_id>/add-report', methods=['GET', 'POST'])
 @login_required
 def add_task_report(task_id):
     task = Task.query.get_or_404(task_id)
     
-    # Только исполнитель может добавлять отчёт
     if task.assignee_id != current_user.id:
-        flash('Только исполнитель может добавлять отчёт к задаче', 'danger')
         return redirect(url_for('project.view', project_id=task.project_id))
     
     if request.method == 'POST':
         report_text = request.form.get('report_text')
         files = request.files.getlist('report_files')
         
-        # Сохраняем файлы
         saved_files = None
         if files and files[0].filename:
             saved_files = save_task_files(files, task_id)
@@ -332,26 +335,23 @@ def add_task_report(task_id):
         if saved_files:
             task.report_files = saved_files
         
-        # Если задача ещё не завершена и добавлен отчёт, можно предложить завершить
         if task.status != 'completed':
             task.status = 'in_progress'
         
         try:
             db.session.commit()
-            flash('Отчёт добавлен успешно', 'success')
             return redirect(url_for('project.view', project_id=task.project_id))
         except Exception as e:
             db.session.rollback()
-            flash(f'Ошибка: {str(e)}', 'danger')
     
     return render_template('projects/add_task_report.html', task=task)
+
 
 @project_bp.route('/task/<int:task_id>/report-data')
 @login_required
 def get_task_report_data(task_id):
     task = Task.query.get_or_404(task_id)
     
-    # Проверка доступа
     if current_user.role.name != 'director' and task.project.manager_id != current_user.id and task.assignee_id != current_user.id:
         return jsonify({'error': 'Нет доступа'}), 403
     

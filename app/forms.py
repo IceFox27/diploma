@@ -1,4 +1,3 @@
-# forms.py
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
@@ -23,7 +22,6 @@ class RegistrationForm(FlaskForm):
     
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
-        # Заполняем выбор ролей из базы данных
         self.role.choices = [(role.id, role.display_name) for role in Role.query.all()]
     
     def validate_login(self, login):

@@ -1,0 +1,110 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Редактирование проекта{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create_project.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+{% endblock %}
+
+{% block content %}
+<div class="create-project-page">
+    <div class="create-project-container">
+        <div class="create-project-card">
+            <div class="create-project-header">
+                <a href="{{ url_for('project.view', project_id=project.id) }}" class="back-btn">
+                    <i class="bi bi-arrow-left"></i> Назад к проекту
+                </a>
+                <h1>Редактирование проекта</h1>
+                <p>{{ project.name }}</p>
+            </div>
+            
+            <form method="post" class="create-project-form">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="name">Название проекта <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" value="{{ project.name }}" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="address">Адрес объекта <span class="required">*</span></label>
+                        <input type="text" id="address" name="address" value="{{ project.address }}" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="description">Описание проекта</label>
+                        <textarea id="description" name="description" rows="4">{{ project.description or '' }}</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="start_date">Плановая дата начала <span class="required">*</span></label>
+                        <input type="date" id="start_date" name="start_date" value="{{ project.start_date }}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="actual_start_date">Фактическая дата начала</label>
+                        <input type="date" id="actual_start_date" name="actual_start_date" value="{{ project.actual_start_date if project.actual_start_date else '' }}">
+                        <small class="form-hint">Заполните, когда работы реально начались. От этой даты считается прогноз.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="end_date">Плановая дата окончания</label>
+                        <input type="date" id="end_date" name="end_date" value="{{ project.end_date if project.end_date else '' }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="budget">Бюджет (₽)</label>
+                        <input type="number" id="budget" name="budget" step="0.01" value="{{ project.budget }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="priority">Приоритет</label>
+                        <select id="priority" name="priority">
+                            <option value="low" {% if project.priority == 'low' %}selected{% endif %}>🟢 Низкий</option>
+                            <option value="medium" {% if project.priority == 'medium' %}selected{% endif %}>🟡 Средний</option>
+                            <option value="high" {% if project.priority == 'high' %}selected{% endif %}>🔴 Высокий</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status">Статус</label>
+                        <select id="status" name="status">
+                            <option value="planning" {% if project.status == 'planning' %}selected{% endif %}>📋 Планирование</option>
+                            <option value="active" {% if project.status == 'active' %}selected{% endif %}>🔄 Активный</option>
+                            <option value="hold" {% if project.status == 'hold' %}selected{% endif %}>⏸️ Приостановлен</option>
+                            <option value="completed" {% if project.status == 'completed' %}selected{% endif %}>✅ Завершён</option>
+                        </select>
+                    </div>
+                    
+                    {% if current_user.role.name == 'director' %}
+                    <div class="form-group">
+                        <label for="manager_id">Менеджер проекта</label>
+                        <select id="manager_id" name="manager_id">
+                            <option value="">Не назначен</option>
+                            {% for manager in managers %}
+                                <option value="{{ manager.id }}" {% if project.manager_id == manager.id %}selected{% endif %}>
+                                    {{ manager.last_name }} {{ manager.first_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="progress_percent">Прогресс выполнения (%)</label>
+                        <input type="number" id="progress_percent" name="progress_percent" min="0" max="100" value="{{ project.progress_percent }}">
+                        <small class="form-hint">Обновляется автоматически при выполнении задач. Можно изменить вручную.</small>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">
+                        <i class="bi bi-save"></i> Сохранить изменения
+                    </button>
+                    <a href="{{ url_for('project.view', project_id=project.id) }}" class="btn-cancel">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -113,6 +113,44 @@
                         </div>
                         
                         <div class="detail-section">
+                            <h3><i class="bi bi-calendar-check"></i> Прогноз сдачи</h3>
+                            <div class="info-list">
+                                <div class="info-row">
+                                    <span class="info-label">📅 Плановая дата:</span>
+                                    <span class="info-value">{{ project.end_date.strftime('%d.%m.%Y') if project.end_date else '—' }}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">📈 Прогнозируемая дата:</span>
+                                    <span class="info-value">
+                                        {% if project.predicted_completion_date %}
+                                            <strong class="status-{{ project.status_color }}">
+                                                {{ project.predicted_completion_date.strftime('%d.%m.%Y') }}
+                                            </strong>
+                                        {% else %}
+                                            —
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">⏱️ Отклонение от плана:</span>
+                                    <span class="info-value">
+                                        {% if project.deviation_days > 0 %}
+                                            <span class="text-danger">⚠️ Отставание на {{ project.deviation_days }} дней</span>
+                                        {% elif project.deviation_days < 0 %}
+                                            <span class="text-success">✅ Опережение на {{ -project.deviation_days }} дней</span>
+                                        {% else %}
+                                            <span class="text-muted">По графику</span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">🚀 Текущая скорость:</span>
+                                    <span class="info-value">{{ "%.1f"|format(project.current_speed * 100) }}% в день</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
                             <h3><i class="bi bi-calculator"></i> Финансы</h3>
                             <div class="info-list">
                                 <div class="info-row">

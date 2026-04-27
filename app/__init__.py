@@ -8,13 +8,6 @@ from .routes.employee import employee
 from .routes.project import project_bp
 from .routes.work import work_bp  
 
-# ЯВНО ИМПОРТИРУЙТЕ ВСЕ МОДЕЛИ, ЧТОБЫ ALEMBIC ИХ УВИДЕЛ
-from .models.employee import Employee
-from .models.role import Role
-from .models.salary import Salary
-from .models.project import Project
-from .models.task import Task  # <--- ДОБАВЬТЕ ЭТУ СТРОКУ
-
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
